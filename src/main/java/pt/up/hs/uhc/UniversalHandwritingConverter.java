@@ -7,5 +7,5 @@ package pt.up.hs.uhc;
  */
 public class UniversalHandwritingConverter {
 
-    /*public void readArchive*/
+    // TODO
 }

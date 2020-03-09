@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ink xmlns="http://www.w3.org/2003/InkML">
+    <annotation type="width">300.0</annotation>
+    <annotation type="height">400.0</annotation>
+    <context xml:id="trace">
+        <inkSource xml:id="traceInfo">
+            <traceFormat>
+                <channel name="X" type="decimal"/>
+                <channel name="Y" type="decimal"/>
+                <channel name="T" type="integer" units="ms"/>
+            </traceFormat>
+        </inkSource>
+    </context>
+    <trace type="penDown" duration="5000" timeOffset="0">2 4 500,4 7 1000,10 13 1500,12 14 2000,15 17 2500,16 18 3000,20 22 3500,20 24 4000,20 27 4500,20 28 5000,</trace>
+    <trace type="penDown" duration="5000" timeOffset="5000">30 40 5500,31 40 6000,32 40 6500,33 40 7000,34 40 7500,35 40 8000,36 40 8500,37 40 9000,38 40 9500,39 40 10000,</trace>
+</ink>

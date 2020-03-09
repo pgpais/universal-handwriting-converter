@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema targetNamespace="protocol" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:tns="protocol">
+
+    <complexType name="School">
+        <attribute name="Name" type="string"/>
+        <attribute name="Classroom" type="string"/>
+        <attribute name="Grade" type="string"/>
+    </complexType>
+
+    <complexType name="Stroke">
+        <attribute name="X" type="int"/>
+        <attribute name="Y" type="int"/>
+        <attribute name="Time" type="long"/>
+    </complexType>
+
+    <complexType name="Subject">
+        <sequence>
+            <element name="Birthdate" type="tns:Birthdate"/>
+        </sequence>
+        <attribute name="Name" type="string"/>
+        <attribute name="Age" type="string"/>
+        <attribute name="Sex" type="string"/>
+        <attribute name="Handedness" type="string"/>
+    </complexType>
+
+    <complexType name="Birthdate">
+        <attribute name="Day" type="int"/>
+        <attribute name="Month" type="int"/>
+        <attribute name="Year" type="int"/>
+    </complexType>
+
+    <complexType name="Layout">
+        <attribute name="Layout" type="string"/>
+        <attribute name="Page" type="int"/>
+    </complexType>
+
+    <complexType name="Protocol">
+        <sequence>
+            <element name="header" type="tns:Header"/>
+            <element name="strokes" type="tns:Strokes" maxOccurs="unbounded"/>
+        </sequence>
+        <attribute name="code" type="string"/>
+    </complexType>
+
+    <complexType name="Strokes">
+        <sequence>
+            <element name="stroke" type="tns:Stroke" maxOccurs="unbounded"/>
+        </sequence>
+        <attribute name="start" type="string"/>
+        <attribute name="stop" type="string"/>
+    </complexType>
+
+    <complexType name="Header">
+        <sequence>
+            <element name="subject" type="tns:Subject"/>
+            <element name="school" type="tns:School"/>
+            <element name="layout" type="tns:Layout"/>
+        </sequence>
+    </complexType>
+
+    <element name="protocol" type="tns:Protocol"/>
+</schema>

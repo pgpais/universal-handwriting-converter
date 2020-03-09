@@ -1,0 +1,119 @@
+
+plugins {
+    // Apply the java-library plugin to add support for Java Library
+    id 'java-library'
+}
+
+repositories {
+    // Use jcenter for resolving dependencies.
+    // You can declare any Maven/Ivy/file repository here.
+    jcenter()
+}
+
+configurations {
+    xjc
+}
+
+dependencies {
+    // This dependency is exported to consumers, that is to say found on their compile classpath.
+    api 'org.apache.commons:commons-math3:3.6.1'
+
+    // Use JAXB only for generating java from XML
+    xjc "org.glassfish.jaxb:jaxb-xjc:${jaxb_xjc_version}"
+    xjc "org.jvnet.jaxb2_commons:jaxb2-basics-annotate:${jaxb2_basics_annotate}"
+    xjc "org.jvnet.jaxb2_commons:jaxb2-basics:${jaxb2_basics}"
+    xjc "org.jvnet.jaxb2_commons:jaxb2-basics-ant:${jaxb2_basics}"
+
+    // This dependency is used internally, and not exposed to consumers on their own compile classpath.
+    implementation 'com.google.guava:guava:28.1-jre'
+    implementation "javax.xml.bind:jaxb-api:${jaxb_api_version}"
+    implementation "com.github.cliftonlabs:json-simple:${json_simple_version}"
+
+    // Use JUnit Jupiter API for testing.
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.5.2'
+
+    // Use JUnit Jupiter Engine for testing.
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.5.2'
+}
+
+apply plugin: 'java'
+
+def generatedJaxb = "${buildDir}/generated/jaxb"
+
+sourceSets {
+    main {
+        output.dir(generatedJaxb, builtBy: 'xjc')
+        java {
+            srcDirs += generatedJaxb
+        }
+    }
+}
+
+test {
+    // Use junit platform for unit tests
+    useJUnitPlatform()
+}
+
+/**
+ * Get the latest modification time of the files in the file collection.
+ *
+ * @param files
+ */
+def latestModificationTime(files) {
+
+    def modificationTime = 0;
+    files.each { file ->
+        if (modificationTime < file.lastModified()) {
+            modificationTime = file.lastModified()
+        }
+    }
+    return modificationTime;
+}
+
+/**
+ * Task to create Java class files from XML schemas.
+ */
+task xjc(description: 'XML schema to Java compiler') {
+
+    ext.schemaDir   = "src/main/resources/schema"
+    ext.outputDir   = generatedJaxb
+   // ext.packageName = 'pt.up.hs.uhc.types'
+    ext.schemas     = ['**/*.xsd']
+    ext.bindings    = ['**/*.jxb']
+    ext.classes     = []
+    ext.args        = []
+
+    onlyIf {
+        def schemaModifiedTime = latestModificationTime(fileTree(dir: schemaDir, includes: schemas + bindings))
+        def outputModifiedTime = latestModificationTime(fileTree(dir: outputDir, includes: classes))
+        return schemaModifiedTime > outputModifiedTime
+    }
+    doFirst {
+        file(outputDir).mkdirs()
+    }
+    doLast {
+        ant.taskdef(
+                name: 'xjc',
+                classname: 'org.jvnet.jaxb2_commons.xjc.XJC2Task',
+                classpath: configurations.xjc.asPath)
+        ant.xjc(
+                destDir: outputDir,
+                extension: 'true',
+//                package: packageName,
+        ) {
+            schema(dir: schemaDir, includes: schemas.join(' '))
+            binding(dir: schemaDir, includes: bindings.join(' '))
+            args.each { val ->
+                arg(value: val)
+            }
+        }
+    }
+}
+
+//Eclipse/IDEA plugins will automatically depend on 'xjc'
+//because the output dir was registered with 'builtBy' information
+apply plugin: 'idea'; apply plugin: 'eclipse'
+
+// Insert XJC into the task dependency graph
+xjc.dependsOn(JavaPlugin.PROCESS_RESOURCES_TASK_NAME)
+compileJava.dependsOn(xjc)

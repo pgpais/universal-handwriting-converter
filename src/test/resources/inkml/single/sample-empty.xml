@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ink xmlns="http://www.w3.org/2003/InkML">
+    <annotation type="width">300.0</annotation>
+    <annotation type="height">400.0</annotation>
+    <context xml:id="trace">
+        <inkSource xml:id="traceInfo">
+            <traceFormat>
+                <channel name="X" type="decimal"/>
+                <channel name="Y" type="decimal"/>
+                <channel name="T" type="integer" units="ms"/>
+            </traceFormat>
+        </inkSource>
+    </context>
+    <trace type="indeterminate" duration="5000" timeOffset="0"></trace>
+</ink>

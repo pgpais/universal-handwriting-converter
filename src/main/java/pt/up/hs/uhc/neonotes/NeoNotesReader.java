@@ -99,8 +99,8 @@ public class NeoNotesReader implements PageReader {
             ByteBuffer dotBuffer = getByteBuffer(bufferedStream, DOT_SIZE);
 
             Dot dot = new Dot()
-                    .x((int) dotBuffer.getFloat())
-                    .y((int) dotBuffer.getFloat())
+                    .x((double) dotBuffer.getFloat())
+                    .y((double) dotBuffer.getFloat())
                     .pressure((double) dotBuffer.getFloat());
 
             int timeDiff = 0xFF & dotBuffer.get();

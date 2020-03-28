@@ -11,8 +11,8 @@ import java.util.HashMap;
  * @author José Carlos Paiva <code>josepaiva94@gmail.com</code>
  */
 public enum DotKeys implements JsonKey {
-    X(0L),
-    Y(0L),
+    X(0D),
+    Y(0D),
     TIMESTAMP(0L),
     PRESSURE(0D),
     TYPE(DotType.DOWN.name()),

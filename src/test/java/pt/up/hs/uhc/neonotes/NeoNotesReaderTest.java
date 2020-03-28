@@ -3,11 +3,14 @@ package pt.up.hs.uhc.neonotes;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import pt.up.hs.uhc.TestUtils;
+import pt.up.hs.uhc.handspy.HandSpyWriter;
 import pt.up.hs.uhc.models.Page;
 import pt.up.hs.uhc.models.Stroke;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 /**
  * Test Neo Notes reader.
@@ -37,16 +40,16 @@ public class NeoNotesReaderTest {
         Assertions.assertEquals(1576499043432L, firstStroke.getEndTime());
         Assertions.assertEquals(97, firstStroke.getDots().size());
         Assertions.assertEquals(1576499042448L, firstStroke.getDots().get(0).getTimestamp());
-        Assertions.assertEquals(12, firstStroke.getDots().get(0).getX());
-        Assertions.assertEquals(30, firstStroke.getDots().get(0).getY());
+        Assertions.assertEquals(12.1899996D, firstStroke.getDots().get(0).getX(), TestUtils.EPSILON);
+        Assertions.assertEquals(30.7099991D, firstStroke.getDots().get(0).getY(), TestUtils.EPSILON);
 
         Stroke lastStroke = page.getStrokes().get(page.getStrokes().size() - 1);
         Assertions.assertEquals(1576500049236L, lastStroke.getStartTime());
         Assertions.assertEquals(1576500049319L, lastStroke.getEndTime());
         Assertions.assertEquals(6, lastStroke.getDots().size());
         Assertions.assertEquals(1576500049236L, lastStroke.getDots().get(0).getTimestamp());
-        Assertions.assertEquals(36, lastStroke.getDots().get(0).getX());
-        Assertions.assertEquals(118, lastStroke.getDots().get(0).getY());
+        Assertions.assertEquals(36.3499985D, lastStroke.getDots().get(0).getX(), TestUtils.EPSILON);
+        Assertions.assertEquals(118.4899979D, lastStroke.getDots().get(0).getY(), TestUtils.EPSILON);
     }
 
     @Test
@@ -69,5 +72,14 @@ public class NeoNotesReaderTest {
         Assertions.assertEquals(1576499414218L, stroke.getStartTime());
         Assertions.assertEquals(1576499414226L, stroke.getEndTime());
         Assertions.assertEquals(3, stroke.getDots().size());
+    }
+
+    @Test
+    public void testWriteHandSpy() throws Exception {
+        InputStream is = TestUtils.openReadStreamForResource("neonotes/single/page_full.data");
+
+        Page page = new NeoNotesReader().read(is);
+
+        new HandSpyWriter().write(page, Files.newOutputStream(Paths.get("page.json")));
     }
 }

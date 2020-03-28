@@ -53,16 +53,16 @@ public class HandSpyLegacyReader implements PageReader {
         for (protocol.Strokes protocolStrokes: protocol.getStrokes()) {
             Stroke stroke = readStroke(protocolStrokes);
             page.addStroke(stroke);
-            int maxX = stroke.getDots().parallelStream()
+            double maxX = stroke.getDots().parallelStream()
                     .map(Dot::getX)
                     .filter(Objects::nonNull)
                     .max(Comparator.naturalOrder())
-                    .orElse(0);
-            int maxY = stroke.getDots().parallelStream()
+                    .orElse(0D);
+            double maxY = stroke.getDots().parallelStream()
                     .map(Dot::getY)
                     .filter(Objects::nonNull)
                     .max(Comparator.naturalOrder())
-                    .orElse(0);
+                    .orElse(0D);
             if (maxX > pageMaxX) {
                 pageMaxX = maxX;
             }
@@ -100,8 +100,8 @@ public class HandSpyLegacyReader implements PageReader {
         protocolStrokes.getStroke()
                 .forEach(protocolStroke -> {
                     stroke.addDot(new Dot(
-                            protocolStroke.getX(),
-                            protocolStroke.getY(),
+                            protocolStroke.getX() == null ? null : (double) protocolStroke.getX(),
+                            protocolStroke.getY() == null ? null : (double) protocolStroke.getY(),
                             protocolStroke.getTime()
                     ));
                 });

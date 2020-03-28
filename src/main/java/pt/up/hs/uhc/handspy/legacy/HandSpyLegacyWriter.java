@@ -79,8 +79,8 @@ public class HandSpyLegacyWriter implements PageWriter {
 
     private protocol.Stroke buildProtocolStroke(Dot dot) {
         protocol.Stroke protocolStroke = new protocol.Stroke();
-        protocolStroke.setX(dot.getX());
-        protocolStroke.setY(dot.getY());
+        protocolStroke.setX(dot.getX() != null ? dot.getX().intValue() : null);
+        protocolStroke.setY(dot.getY() != null ? dot.getY().intValue() : null);
         protocolStroke.setTime(dot.getTimestamp());
         return protocolStroke;
     }

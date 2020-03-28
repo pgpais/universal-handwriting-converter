@@ -11,8 +11,8 @@ import java.util.Objects;
  */
 public class Dot {
 
-    private Integer x;
-    private Integer y;
+    private Double x;
+    private Double y;
     private Long timestamp;
     private DotType type = DotType.DOWN;
 
@@ -24,14 +24,14 @@ public class Dot {
         this.metadata = new HashMap<>();
     }
 
-    public Dot(Integer x, Integer y, Long timestamp) {
+    public Dot(Double x, Double y, Long timestamp) {
         this.x = x;
         this.y = y;
         this.timestamp = timestamp;
         this.metadata = new HashMap<>();
     }
 
-    public Dot(Integer x, Integer y, Long timestamp, Double pressure) {
+    public Dot(Double x, Double y, Long timestamp, Double pressure) {
         this.x = x;
         this.y = y;
         this.timestamp = timestamp;
@@ -39,7 +39,7 @@ public class Dot {
         this.metadata = new HashMap<>();
     }
 
-    public Dot(Integer x, Integer y, Long timestamp, DotType type, Double pressure) {
+    public Dot(Double x, Double y, Long timestamp, DotType type, Double pressure) {
         this.x = x;
         this.y = y;
         this.timestamp = timestamp;
@@ -48,7 +48,7 @@ public class Dot {
         this.metadata = new HashMap<>();
     }
 
-    public Dot(Integer x, Integer y, Long timestamp, DotType type, Double pressure, Map<String, Object> metadata) {
+    public Dot(Double x, Double y, Long timestamp, DotType type, Double pressure, Map<String, Object> metadata) {
         this.x = x;
         this.y = y;
         this.timestamp = timestamp;
@@ -57,28 +57,28 @@ public class Dot {
         this.metadata = metadata;
     }
 
-    public Integer getX() {
+    public Double getX() {
         return x;
     }
 
-    public void setX(Integer x) {
+    public void setX(Double x) {
         this.x = x;
     }
 
-    public Dot x(Integer x) {
+    public Dot x(Double x) {
         this.x = x;
         return this;
     }
 
-    public Integer getY() {
+    public Double getY() {
         return y;
     }
 
-    public void setY(Integer y) {
+    public void setY(Double y) {
         this.y = y;
     }
 
-    public Dot y(Integer y) {
+    public Dot y(Double y) {
         this.y = y;
         return this;
     }

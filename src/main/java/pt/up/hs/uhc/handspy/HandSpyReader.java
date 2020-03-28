@@ -64,8 +64,8 @@ public class HandSpyReader implements PageReader {
     private Dot readDotJson(JsonObject dotJson) {
 
         return new Dot()
-                .x(dotJson.getIntegerOrDefault(DotKeys.X))
-                .y(dotJson.getIntegerOrDefault(DotKeys.Y))
+                .x(dotJson.getDoubleOrDefault(DotKeys.X))
+                .y(dotJson.getDoubleOrDefault(DotKeys.Y))
                 .timestamp(dotJson.getLongOrDefault(DotKeys.TIMESTAMP))
                 .pressure(dotJson.getDoubleOrDefault(DotKeys.PRESSURE))
                 .type(DotType.valueOf(

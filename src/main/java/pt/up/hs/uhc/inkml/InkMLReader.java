@@ -99,8 +99,8 @@ public class InkMLReader implements PageReader {
             }
             stroke.addDot(
                     new Dot(
-                            Integer.parseInt(values[0]),
-                            Integer.parseInt(values[1]),
+                            Double.parseDouble(values[0]),
+                            Double.parseDouble(values[1]),
                             Long.parseLong(values[2]),
                             dotType,
                             null

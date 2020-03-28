@@ -1,22 +1,27 @@
 package pt.up.hs.uhc.neonotes;
 
+import org.apache.commons.compress.archivers.tar.TarArchiveEntry;
+import org.apache.commons.compress.archivers.tar.TarArchiveInputStream;
+import pt.up.hs.uhc.ArchiveReader;
 import pt.up.hs.uhc.PageReader;
 import pt.up.hs.uhc.models.Dot;
 import pt.up.hs.uhc.models.Page;
 import pt.up.hs.uhc.models.Stroke;
 
-import java.io.BufferedInputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
 
 /**
  * Reader of Neo Notes' files.
  *
  * @author José Carlos Paiva <code>josepaiva94@gmail.com</code>
  */
-public class NeoNotesReader implements PageReader {
+public class NeoNotesReader implements PageReader, ArchiveReader {
 
     // basic sizes
     private static final int BYTE_SIZE = 1;
@@ -28,6 +33,9 @@ public class NeoNotesReader implements PageReader {
     private static final int HEADER_SIZE = ID_SIZE + 6 * NUMBER_SIZE + 2 * LONG_SIZE + BYTE_SIZE;
     private static final int STROKE_HEADER_SIZE = BYTE_SIZE + 2 * NUMBER_SIZE + LONG_SIZE;
     private static final int DOT_SIZE = 3 * NUMBER_SIZE + BYTE_SIZE;
+
+    // reader props
+    private static final int BUFFER_SIZE = 4096;
 
     @Override
     public Page read(InputStream inputStream) throws IOException {
@@ -69,6 +77,51 @@ public class NeoNotesReader implements PageReader {
         }
 
         return page;
+    }
+
+    @Override
+    public List<Page> read(ZipInputStream zis) throws Exception {
+        List<Page> pages = new ArrayList<>();
+        ZipEntry zipEntry;
+        while ((zipEntry = zis.getNextEntry()) != null) {
+            if (zipEntry.getName().endsWith(".data")) {
+                byte[] bytes = new byte[BUFFER_SIZE];
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                int count;
+                while ((count = zis.read(bytes)) > 0) {
+                    baos.write(bytes, 0, count);
+                }
+
+                pages.add(read(new ByteArrayInputStream(baos.toByteArray())));
+
+                baos.close();
+            }
+            zis.closeEntry();
+        }
+        zis.close();
+        return pages;
+    }
+
+    @Override
+    public List<Page> read(TarArchiveInputStream tais) throws Exception {
+        List<Page> pages = new ArrayList<>();
+        TarArchiveEntry tarEntry;
+        while ((tarEntry = (TarArchiveEntry) tais.getNextEntry()) != null) {
+            if (tarEntry.getName().endsWith(".data")) {
+                byte[] bytes = new byte[BUFFER_SIZE];
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                int count;
+                while ((count = tais.read(bytes)) > 0) {
+                    baos.write(bytes, 0, count);
+                }
+
+                pages.add(read(new ByteArrayInputStream(baos.toByteArray())));
+
+                baos.close();
+            }
+        }
+        tais.close();
+        return pages;
     }
 
     /**

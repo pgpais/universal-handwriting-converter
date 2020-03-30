@@ -20,7 +20,7 @@ public interface ArchiveReader {
      * {@link InputStream} to a "xxx.neonotes" file.
      *
      * @param zis {@link ZipInputStream} to an archive of handwriting data.
-     * @return {@link List<Page>} data from archive.
+     * @return {@link List} data from archive.
      * @throws Exception if an exception occurs while reading data.
      */
     List<Page> read(ZipInputStream zis) throws Exception;
@@ -31,7 +31,7 @@ public interface ArchiveReader {
      * {@link InputStream} to a "xxx.neonotes" file.
      *
      * @param tais {@link TarArchiveInputStream} to an archive of handwriting data.
-     * @return {@link List<Page>} data from archive.
+     * @return {@link List} data from archive.
      * @throws Exception if an exception occurs while reading data.
      */
     List<Page> read(TarArchiveInputStream tais) throws Exception;

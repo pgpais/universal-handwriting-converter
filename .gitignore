@@ -7,3 +7,7 @@ build
 # Ignore IDE files
 .idea
 *.iml
+
+# Ignore secret
+local.properties
+

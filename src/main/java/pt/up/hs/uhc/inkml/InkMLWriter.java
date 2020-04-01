@@ -1,7 +1,7 @@
 package pt.up.hs.uhc.inkml;
 
 import org.w3._2003.inkml.*;
-import pt.up.hs.uhc.PageWriter;
+import pt.up.hs.uhc.base.PageWriter;
 import pt.up.hs.uhc.models.Dot;
 import pt.up.hs.uhc.models.DotType;
 import pt.up.hs.uhc.models.Page;

@@ -22,7 +22,7 @@ public class InkMLWriterTest {
     public void testSampleEmptyPage() throws Exception {
 
         // expected
-        InputStream is = TestUtils.openReadStreamForResource("inkml/single/sample-empty.xml");
+        InputStream is = TestUtils.openReadStreamForResource("inkml/single/sample-empty.inkml");
         byte[] expected = new byte[is.available()];
         is.read(expected);
 
@@ -48,7 +48,7 @@ public class InkMLWriterTest {
     public void testSampleFilledPage() throws Exception {
 
         // expected
-        InputStream is = TestUtils.openReadStreamForResource("inkml/single/sample-filled.xml");
+        InputStream is = TestUtils.openReadStreamForResource("inkml/single/sample-filled.inkml");
         byte[] expected = new byte[is.available()];
         is.read(expected);
 

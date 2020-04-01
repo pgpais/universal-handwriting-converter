@@ -3,7 +3,7 @@ package pt.up.hs.uhc.handspy;
 import com.github.cliftonlabs.json_simple.JsonArray;
 import com.github.cliftonlabs.json_simple.JsonObject;
 import com.github.cliftonlabs.json_simple.Jsoner;
-import pt.up.hs.uhc.PageWriter;
+import pt.up.hs.uhc.base.PageWriter;
 import pt.up.hs.uhc.handspy.keys.DotKeys;
 import pt.up.hs.uhc.handspy.keys.PageKeys;
 import pt.up.hs.uhc.handspy.keys.StrokeKeys;

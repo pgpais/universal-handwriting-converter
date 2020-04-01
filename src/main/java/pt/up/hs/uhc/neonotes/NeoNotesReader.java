@@ -2,8 +2,8 @@ package pt.up.hs.uhc.neonotes;
 
 import org.apache.commons.compress.archivers.tar.TarArchiveEntry;
 import org.apache.commons.compress.archivers.tar.TarArchiveInputStream;
-import pt.up.hs.uhc.ArchiveReader;
-import pt.up.hs.uhc.PageReader;
+import pt.up.hs.uhc.base.BaseReader;
+import pt.up.hs.uhc.base.PageReader;
 import pt.up.hs.uhc.models.Dot;
 import pt.up.hs.uhc.models.Page;
 import pt.up.hs.uhc.models.Stroke;
@@ -21,7 +21,7 @@ import java.util.zip.ZipInputStream;
  *
  * @author José Carlos Paiva <code>josepaiva94@gmail.com</code>
  */
-public class NeoNotesReader implements PageReader, ArchiveReader {
+public class NeoNotesReader extends BaseReader implements PageReader {
 
     // basic sizes
     private static final int BYTE_SIZE = 1;
@@ -80,7 +80,7 @@ public class NeoNotesReader implements PageReader, ArchiveReader {
     }
 
     @Override
-    public List<Page> read(ZipInputStream zis) throws Exception {
+    public List<Page> readArchive(ZipInputStream zis) throws Exception {
         List<Page> pages = new ArrayList<>();
         ZipEntry zipEntry;
         while ((zipEntry = zis.getNextEntry()) != null) {
@@ -103,7 +103,7 @@ public class NeoNotesReader implements PageReader, ArchiveReader {
     }
 
     @Override
-    public List<Page> read(TarArchiveInputStream tais) throws Exception {
+    public List<Page> readArchive(TarArchiveInputStream tais) throws Exception {
         List<Page> pages = new ArrayList<>();
         TarArchiveEntry tarEntry;
         while ((tarEntry = (TarArchiveEntry) tais.getNextEntry()) != null) {

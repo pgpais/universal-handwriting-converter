@@ -1,7 +1,7 @@
 package pt.up.hs.uhc.handspy.legacy;
 
 import protocol.*;
-import pt.up.hs.uhc.PageWriter;
+import pt.up.hs.uhc.base.PageWriter;
 import pt.up.hs.uhc.models.Dot;
 import pt.up.hs.uhc.models.Page;
 import pt.up.hs.uhc.models.Stroke;

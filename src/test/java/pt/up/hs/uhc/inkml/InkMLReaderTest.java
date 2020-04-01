@@ -20,7 +20,7 @@ public class InkMLReaderTest {
     @Test
     public void testSampleEmptyPage() throws Exception {
 
-        InputStream is = TestUtils.openReadStreamForResource("inkml/single/sample-empty.xml");
+        InputStream is = TestUtils.openReadStreamForResource("inkml/single/sample-empty.inkml");
 
         Page page = new InkMLReader().read(is);
 
@@ -38,7 +38,7 @@ public class InkMLReaderTest {
     @Test
     public void testSampleFilledPage() throws Exception {
 
-        InputStream is = TestUtils.openReadStreamForResource("inkml/single/sample-filled.xml");
+        InputStream is = TestUtils.openReadStreamForResource("inkml/single/sample-filled.inkml");
 
         Page page = new InkMLReader().read(is);
 

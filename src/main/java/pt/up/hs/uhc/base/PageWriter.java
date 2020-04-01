@@ -1,4 +1,4 @@
-package pt.up.hs.uhc;
+package pt.up.hs.uhc.base;
 
 import pt.up.hs.uhc.models.Page;
 

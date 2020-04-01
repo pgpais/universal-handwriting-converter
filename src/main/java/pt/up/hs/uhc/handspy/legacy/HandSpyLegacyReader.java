@@ -1,7 +1,10 @@
 package pt.up.hs.uhc.handspy.legacy;
 
+import org.apache.commons.compress.archivers.tar.TarArchiveInputStream;
 import protocol.*;
-import pt.up.hs.uhc.PageReader;
+import pt.up.hs.uhc.base.BaseReader;
+import pt.up.hs.uhc.base.PageReader;
+import pt.up.hs.uhc.exceptions.UnsupportedFormatException;
 import pt.up.hs.uhc.models.Dot;
 import pt.up.hs.uhc.models.Page;
 import pt.up.hs.uhc.models.Stroke;
@@ -11,17 +14,15 @@ import javax.xml.bind.JAXBElement;
 import javax.xml.bind.Unmarshaller;
 import javax.xml.transform.stream.StreamSource;
 import java.io.InputStream;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
+import java.util.zip.ZipInputStream;
 
 /**
  * Reader for HandSpy legacy format.
  *
  * @author José Carlos Paiva <code>josepaiva94@gmail.com</code>
  */
-public class HandSpyLegacyReader implements PageReader {
+public class HandSpyLegacyReader extends BaseReader {
 
     @Override
     public Page read(InputStream is) throws Exception {
@@ -72,6 +73,16 @@ public class HandSpyLegacyReader implements PageReader {
         }
 
         return page.width(pageMaxX).height(pageMaxY);
+    }
+
+    @Override
+    public List<Page> readArchive(ZipInputStream zis) {
+        throw new UnsupportedFormatException();
+    }
+
+    @Override
+    public List<Page> readArchive(TarArchiveInputStream tais) {
+        throw new UnsupportedFormatException();
     }
 
     private Map<String, Object> readProtocolHeader(Header header) {

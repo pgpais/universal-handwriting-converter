@@ -3,18 +3,13 @@ package pt.up.hs.uhc.neonotes;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import pt.up.hs.uhc.TestUtils;
-import pt.up.hs.uhc.handspy.HandSpyWriter;
 import pt.up.hs.uhc.models.Page;
 import pt.up.hs.uhc.models.Stroke;
 
 import java.io.BufferedInputStream;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.List;
-import java.util.zip.ZipFile;
 import java.util.zip.ZipInputStream;
 
 /**
@@ -83,7 +78,7 @@ public class NeoNotesReaderTest {
     public void testReadArchive() throws Exception {
         InputStream is = TestUtils.openReadStreamForResource("neonotes/archive/archive.neonotes.zip");
 
-        List<Page> pages = new NeoNotesReader().read(new ZipInputStream(new BufferedInputStream(is)));
+        List<Page> pages = new NeoNotesReader().readArchive(new ZipInputStream(new BufferedInputStream(is)));
 
         Assertions.assertEquals(2, pages.size());
 

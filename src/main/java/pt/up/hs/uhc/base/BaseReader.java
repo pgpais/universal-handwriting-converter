@@ -6,6 +6,7 @@ import pt.up.hs.uhc.utils.FilenameUtils;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.InputStream;
 import java.util.List;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.ZipInputStream;
@@ -23,21 +24,24 @@ public abstract class BaseReader implements PageReader, ArchiveReader {
     }
 
     @Override
-    public List<Page> readArchive(File file) throws Exception {
+    public List<Page> readArchive(String filename, InputStream is) throws Exception {
 
-        String ext = FilenameUtils.getFileExtension(file.getName());
-
-        FileInputStream fis = new FileInputStream(file);
+        String ext = FilenameUtils.getFileExtension(filename);
 
         if (ext.matches("(?i)(tar\\.gz)$")) {
-            GZIPInputStream gzis = new GZIPInputStream(fis);
+            GZIPInputStream gzis = new GZIPInputStream(is);
             return readArchive(new TarArchiveInputStream(gzis));
         }
 
         if (ext.matches("(?i)(tar)$")) {
-            return readArchive(new TarArchiveInputStream(fis));
+            return readArchive(new TarArchiveInputStream(is));
         }
 
-        return readArchive(new ZipInputStream(fis));
+        return readArchive(new ZipInputStream(is));
+    }
+
+    @Override
+    public List<Page> readArchive(File file) throws Exception {
+        return readArchive(file.getName(), new FileInputStream(file));
     }
 }

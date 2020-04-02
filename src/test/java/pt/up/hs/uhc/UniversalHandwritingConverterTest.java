@@ -7,6 +7,7 @@ import pt.up.hs.uhc.models.Format;
 import pt.up.hs.uhc.models.Page;
 import pt.up.hs.uhc.models.Stroke;
 
+import java.io.FileNotFoundException;
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -18,7 +19,7 @@ import java.util.List;
 public class UniversalHandwritingConverterTest {
 
     @Test
-    public void testReadNeoNotesWithAutoDetect() {
+    public void testReadNeoNotesWithAutoDetect() throws FileNotFoundException {
         UniversalHandwritingConverter uhc = new UniversalHandwritingConverter()
                 .file(TestUtils.openFileForResource("neonotes/single/page_full.data"));
 
@@ -52,7 +53,7 @@ public class UniversalHandwritingConverterTest {
     }
 
     @Test
-    public void testReadNeoNotesWithFormatSpecified() {
+    public void testReadNeoNotesWithFormatSpecified() throws FileNotFoundException {
         UniversalHandwritingConverter uhc = new UniversalHandwritingConverter()
                 .inputFormat(Format.NEONOTES)
                 .file(TestUtils.openFileForResource("neonotes/single/page_full.data"));
@@ -87,7 +88,7 @@ public class UniversalHandwritingConverterTest {
     }
 
     @Test
-    public void testReadNeoNotesArchiveWithAutoDetect() {
+    public void testReadNeoNotesArchiveWithAutoDetect() throws FileNotFoundException {
         UniversalHandwritingConverter uhc = new UniversalHandwritingConverter()
                 .file(TestUtils.openFileForResource("neonotes/archive/archive.neonotes.zip"))
                 .readAll();
@@ -141,7 +142,7 @@ public class UniversalHandwritingConverterTest {
     }
 
     @Test
-    public void testReadNeoNotesArchiveWithFormatSpecified() {
+    public void testReadNeoNotesArchiveWithFormatSpecified() throws FileNotFoundException {
         UniversalHandwritingConverter uhc = new UniversalHandwritingConverter()
                 .inputFormat(Format.NEONOTES_ARCHIVE)
                 .file(TestUtils.openFileForResource("neonotes/archive/archive.neonotes.zip"))
@@ -196,7 +197,7 @@ public class UniversalHandwritingConverterTest {
     }
 
     @Test
-    public void testReadInkMLWithAutoDetect() {
+    public void testReadInkMLWithAutoDetect() throws FileNotFoundException {
         UniversalHandwritingConverter uhc = new UniversalHandwritingConverter()
                 .file(TestUtils.openFileForResource("inkml/single/sample-filled.inkml"))
                 .readAll();
@@ -244,7 +245,7 @@ public class UniversalHandwritingConverterTest {
     }
 
     @Test
-    public void testReadInkMLWithFormatSpecified() {
+    public void testReadInkMLWithFormatSpecified() throws FileNotFoundException {
         UniversalHandwritingConverter uhc = new UniversalHandwritingConverter()
                 .inputFormat(Format.INKML)
                 .file(TestUtils.openFileForResource("inkml/single/sample-filled.inkml"))
@@ -293,7 +294,7 @@ public class UniversalHandwritingConverterTest {
     }
 
     @Test
-    public void testReadHandSpyWithAutoDetect() {
+    public void testReadHandSpyWithAutoDetect() throws FileNotFoundException {
         UniversalHandwritingConverter uhc = new UniversalHandwritingConverter()
                 .file(TestUtils.openFileForResource("handspy/single/sample-filled.json"))
                 .readAll();
@@ -342,7 +343,7 @@ public class UniversalHandwritingConverterTest {
     }
 
     @Test
-    public void testReadHandSpyWithFormatSpecified() {
+    public void testReadHandSpyWithFormatSpecified() throws FileNotFoundException {
         UniversalHandwritingConverter uhc = new UniversalHandwritingConverter()
                 .inputFormat(Format.HANDSPY)
                 .file(TestUtils.openFileForResource("handspy/single/sample-filled.json"))
@@ -392,7 +393,7 @@ public class UniversalHandwritingConverterTest {
     }
 
     @Test
-    public void testReadHandSpyLegacyWithAutoDetect() {
+    public void testReadHandSpyLegacyWithAutoDetect() throws FileNotFoundException {
         UniversalHandwritingConverter uhc = new UniversalHandwritingConverter()
                 .file(TestUtils.openFileForResource("handspy/legacy/single/sample-filled.xml"))
                 .readAll();
@@ -443,7 +444,7 @@ public class UniversalHandwritingConverterTest {
     }
 
     @Test
-    public void testReadHandSpyLegacyWithFormatSpecified() {
+    public void testReadHandSpyLegacyWithFormatSpecified() throws FileNotFoundException {
         UniversalHandwritingConverter uhc = new UniversalHandwritingConverter()
                 .inputFormat(Format.HANDSPY_LEGACY)
                 .file(TestUtils.openFileForResource("handspy/legacy/single/sample-filled.xml"))

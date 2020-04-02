@@ -16,6 +16,17 @@ import java.util.zip.ZipInputStream;
 public interface ArchiveReader {
 
     /**
+     * Reads an archive of handwriting data, provided an {@link InputStream}
+     * and the file name/path.
+     *
+     * @param filename {@link String} file name/path to read.
+     * @param is       {@link InputStream} file input stream.
+     * @return {@link List} data from archive.
+     * @throws Exception if an exception occurs while reading data.
+     */
+    List<Page> readArchive(String filename, InputStream is) throws Exception;
+
+    /**
      * Reads an archive of handwriting data, provided an {@link File}.
      *
      * @param file {@link File} file to read.
@@ -41,7 +52,7 @@ public interface ArchiveReader {
      * {@link InputStream} to a "xxx.neonotes" file.
      *
      * @param tais {@link TarArchiveInputStream} to an archive of handwriting
-     *                                          data.
+     *             data.
      * @return {@link List} data from archive.
      * @throws Exception if an exception occurs while reading data.
      */

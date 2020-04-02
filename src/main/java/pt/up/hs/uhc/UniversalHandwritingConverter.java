@@ -15,8 +15,7 @@ import pt.up.hs.uhc.models.Format;
 import pt.up.hs.uhc.neonotes.NeoNotesReader;
 import pt.up.hs.uhc.utils.FilenameUtils;
 
-import java.io.File;
-import java.io.OutputStream;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,6 +40,8 @@ public class UniversalHandwritingConverter {
     // format
     private Format inFormat = null;
     private Format outFormat = Format.HANDSPY;
+    private String filename;
+    private InputStream is;
     private File file = null;
 
     // pages
@@ -57,6 +58,15 @@ public class UniversalHandwritingConverter {
         this.file = file;
     }
 
+    public UniversalHandwritingConverter(
+            Format inFormat, Format outFormat, String filename, InputStream is
+    ) {
+        this.inFormat = inFormat;
+        this.outFormat = outFormat;
+        this.filename = filename;
+        this.is = is;
+    }
+
     public UniversalHandwritingConverter inputFormat(Format inFormat) {
         this.inFormat = inFormat;
         return this;
@@ -67,20 +77,27 @@ public class UniversalHandwritingConverter {
         return this;
     }
 
-    public UniversalHandwritingConverter file(File file) {
-        this.file = file;
+    public UniversalHandwritingConverter file(String filename, InputStream is) {
+        this.filename = filename;
+        this.is = is;
+        return this;
+    }
+
+    public UniversalHandwritingConverter file(File file) throws FileNotFoundException {
+        this.filename = file.getAbsolutePath();
+        this.is = new FileInputStream(file);
         return this;
     }
 
     public UniversalHandwritingConverter readAll() {
 
-        if (file == null) {
+        if (filename == null || is == null) {
             throw new UniversalHandwritingConverterException("File not specified.");
         }
 
         Format format;
         if (inFormat == null) {
-            format = autoDetectFormat(file);
+            format = autoDetectFormat();
         } else {
             format = inFormat;
         }
@@ -88,19 +105,19 @@ public class UniversalHandwritingConverter {
         try {
             switch (format) {
                 case NEONOTES_ARCHIVE:
-                    pages.addAll(neoNotesReader.readArchive(file));
+                    pages.addAll(neoNotesReader.readArchive(filename, is));
                     break;
                 case NEONOTES:
-                    pages.add(neoNotesReader.read(file));
+                    pages.add(neoNotesReader.read(is));
                     break;
                 case HANDSPY_LEGACY:
-                    pages.add(handSpyLegacyReader.read(file));
+                    pages.add(handSpyLegacyReader.read(is));
                     break;
                 case INKML:
-                    pages.add(inkMLReader.read(file));
+                    pages.add(inkMLReader.read(is));
                     break;
                 case HANDSPY:
-                    pages.add(handSpyReader.read(file));
+                    pages.add(handSpyReader.read(is));
                     break;
                 default:
                     throw new UnknownFormatException();
@@ -157,9 +174,9 @@ public class UniversalHandwritingConverter {
         return pages;
     }
 
-    private Format autoDetectFormat(File file) {
+    private Format autoDetectFormat() {
 
-        String ext = FilenameUtils.getFileExtension(file.getName());
+        String ext = FilenameUtils.getFileExtension(filename);
 
         Format format;
         if (ext.matches("(?i)^(neonotes)(\\.zip)?$")) {

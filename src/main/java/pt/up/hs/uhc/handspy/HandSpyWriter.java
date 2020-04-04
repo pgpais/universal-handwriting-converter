@@ -31,7 +31,10 @@ public class HandSpyWriter implements PageWriter {
         // add page info
         pageJson.put(PageKeys.WIDTH, page.getWidth());
         pageJson.put(PageKeys.HEIGHT, page.getHeight());
-        pageJson.put(PageKeys.METADATA, JsonUtils.fromMap(page.getMetadata()));
+
+        if (!page.getMetadata().isEmpty()) {
+            pageJson.put(PageKeys.METADATA, JsonUtils.fromMap(page.getMetadata()));
+        }
 
         // add strokes' info
         JsonArray strokesJson = new JsonArray();
@@ -58,7 +61,10 @@ public class HandSpyWriter implements PageWriter {
         // add stroke info
         strokeJson.put(StrokeKeys.START_TIME, stroke.getStartTime());
         strokeJson.put(StrokeKeys.END_TIME, stroke.getEndTime());
-        strokeJson.put(StrokeKeys.METADATA, JsonUtils.fromMap(stroke.getMetadata()));
+
+        if (!stroke.getMetadata().isEmpty()) {
+            strokeJson.put(StrokeKeys.METADATA, JsonUtils.fromMap(stroke.getMetadata()));
+        }
 
         // add dots' info
         JsonArray strokesJson = new JsonArray();
@@ -86,7 +92,9 @@ public class HandSpyWriter implements PageWriter {
 
         jsonObject.put(DotKeys.PRESSURE, dot.getPressure());
 
-        jsonObject.put(DotKeys.METADATA, JsonUtils.fromMap(dot.getMetadata()));
+        if (!dot.getMetadata().isEmpty()) {
+            jsonObject.put(DotKeys.METADATA, JsonUtils.fromMap(dot.getMetadata()));
+        }
 
         return jsonObject;
     }

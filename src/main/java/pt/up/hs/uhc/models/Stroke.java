@@ -1,5 +1,6 @@
 package pt.up.hs.uhc.models;
 
+import java.io.Serializable;
 import java.util.*;
 
 /**
@@ -7,7 +8,7 @@ import java.util.*;
  *
  * @author José Carlos Paiva <code>josepaiva94@gmail.com</code>
  */
-public class Stroke {
+public class Stroke implements Serializable, Cloneable {
 
     private Long startTime;
     private Long endTime;
@@ -123,5 +124,10 @@ public class Stroke {
                 ", metadata=" + metadata +
                 ", dots=" + dots +
                 '}';
+    }
+
+    @Override
+    public Stroke clone() throws CloneNotSupportedException {
+        return (Stroke) super.clone();
     }
 }

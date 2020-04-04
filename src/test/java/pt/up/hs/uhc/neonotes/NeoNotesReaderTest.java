@@ -30,8 +30,8 @@ public class NeoNotesReaderTest {
         Assertions.assertEquals(1576500328443L, page.getMetadata("modifiedTime"));
         Assertions.assertEquals(79, page.getMetadata("pageNo"));
         Assertions.assertEquals(5, page.getMetadata("version"));
-        Assertions.assertEquals(88.6779785D, page.getWidth(), TestUtils.EPSILON);
-        Assertions.assertEquals(114.7084808D, page.getHeight(), TestUtils.EPSILON);
+        Assertions.assertEquals(210.225928D, page.getWidth(), TestUtils.EPSILON);
+        Assertions.assertEquals(271.935572D, page.getHeight(), TestUtils.EPSILON);
 
         Assertions.assertEquals(643, page.getStrokes().size());
 
@@ -40,16 +40,16 @@ public class NeoNotesReaderTest {
         Assertions.assertEquals(1576499043432L, firstStroke.getEndTime());
         Assertions.assertEquals(97, firstStroke.getDots().size());
         Assertions.assertEquals(1576499042448L, firstStroke.getDots().get(0).getTimestamp());
-        Assertions.assertEquals(12.1899996D, firstStroke.getDots().get(0).getX(), TestUtils.EPSILON);
-        Assertions.assertEquals(30.7099991D, firstStroke.getDots().get(0).getY(), TestUtils.EPSILON);
+        Assertions.assertEquals(28.8984257D, firstStroke.getDots().get(0).getX(), TestUtils.EPSILON);
+        Assertions.assertEquals(72.8031712D, firstStroke.getDots().get(0).getY(), TestUtils.EPSILON);
 
         Stroke lastStroke = page.getStrokes().get(page.getStrokes().size() - 1);
         Assertions.assertEquals(1576500049236L, lastStroke.getStartTime());
         Assertions.assertEquals(1576500049319L, lastStroke.getEndTime());
         Assertions.assertEquals(6, lastStroke.getDots().size());
         Assertions.assertEquals(1576500049236L, lastStroke.getDots().get(0).getTimestamp());
-        Assertions.assertEquals(36.3499985D, lastStroke.getDots().get(0).getX(), TestUtils.EPSILON);
-        Assertions.assertEquals(118.4899979D, lastStroke.getDots().get(0).getY(), TestUtils.EPSILON);
+        Assertions.assertEquals(86.1737297D, lastStroke.getDots().get(0).getX(), TestUtils.EPSILON);
+        Assertions.assertEquals(280.9002883D, lastStroke.getDots().get(0).getY(), TestUtils.EPSILON);
     }
 
     @Test
@@ -63,8 +63,8 @@ public class NeoNotesReaderTest {
         Assertions.assertEquals(1576500142563L, page.getMetadata("modifiedTime"));
         Assertions.assertEquals(15, page.getMetadata("pageNo"));
         Assertions.assertEquals(5, page.getMetadata("version"));
-        Assertions.assertEquals(88.6779785D, page.getWidth(), TestUtils.EPSILON);
-        Assertions.assertEquals(114.7084808D, page.getHeight(), TestUtils.EPSILON);
+        Assertions.assertEquals(210.225928D, page.getWidth(), TestUtils.EPSILON);
+        Assertions.assertEquals(271.935572D, page.getHeight(), TestUtils.EPSILON);
 
         Assertions.assertEquals(1, page.getStrokes().size());
 
@@ -89,8 +89,8 @@ public class NeoNotesReaderTest {
         Assertions.assertEquals(1576500142563L, firstPage.getMetadata("modifiedTime"));
         Assertions.assertEquals(15, firstPage.getMetadata("pageNo"));
         Assertions.assertEquals(5, firstPage.getMetadata("version"));
-        Assertions.assertEquals(88.6779785D, firstPage.getWidth(), TestUtils.EPSILON);
-        Assertions.assertEquals(114.7084808D, firstPage.getHeight(), TestUtils.EPSILON);
+        Assertions.assertEquals(210.225928D, firstPage.getWidth(), TestUtils.EPSILON);
+        Assertions.assertEquals(271.935572D, firstPage.getHeight(), TestUtils.EPSILON);
 
         Assertions.assertEquals(1, firstPage.getStrokes().size());
 
@@ -106,8 +106,8 @@ public class NeoNotesReaderTest {
         Assertions.assertEquals(1576500328443L, secondPage.getMetadata("modifiedTime"));
         Assertions.assertEquals(79, secondPage.getMetadata("pageNo"));
         Assertions.assertEquals(5, secondPage.getMetadata("version"));
-        Assertions.assertEquals(88.6779785D, secondPage.getWidth(), TestUtils.EPSILON);
-        Assertions.assertEquals(114.7084808D, secondPage.getHeight(), TestUtils.EPSILON);
+        Assertions.assertEquals(210.225928D, secondPage.getWidth(), TestUtils.EPSILON);
+        Assertions.assertEquals(271.935572D, secondPage.getHeight(), TestUtils.EPSILON);
 
         Assertions.assertEquals(643, secondPage.getStrokes().size());
 
@@ -116,16 +116,16 @@ public class NeoNotesReaderTest {
         Assertions.assertEquals(1576499043432L, firstStroke.getEndTime());
         Assertions.assertEquals(97, firstStroke.getDots().size());
         Assertions.assertEquals(1576499042448L, firstStroke.getDots().get(0).getTimestamp());
-        Assertions.assertEquals(12.1899996D, firstStroke.getDots().get(0).getX(), TestUtils.EPSILON);
-        Assertions.assertEquals(30.7099991D, firstStroke.getDots().get(0).getY(), TestUtils.EPSILON);
+        Assertions.assertEquals(28.8984257D, firstStroke.getDots().get(0).getX(), TestUtils.EPSILON);
+        Assertions.assertEquals(72.8031712D, firstStroke.getDots().get(0).getY(), TestUtils.EPSILON);
 
         Stroke lastStroke = secondPage.getStrokes().get(secondPage.getStrokes().size() - 1);
         Assertions.assertEquals(1576500049236L, lastStroke.getStartTime());
         Assertions.assertEquals(1576500049319L, lastStroke.getEndTime());
         Assertions.assertEquals(6, lastStroke.getDots().size());
         Assertions.assertEquals(1576500049236L, lastStroke.getDots().get(0).getTimestamp());
-        Assertions.assertEquals(36.3499985D, lastStroke.getDots().get(0).getX(), TestUtils.EPSILON);
-        Assertions.assertEquals(118.4899979D, lastStroke.getDots().get(0).getY(), TestUtils.EPSILON);
+        Assertions.assertEquals(86.1737297D, lastStroke.getDots().get(0).getX(), TestUtils.EPSILON);
+        Assertions.assertEquals(280.9002883D, lastStroke.getDots().get(0).getY(), TestUtils.EPSILON);
     }
 
     /*@Test

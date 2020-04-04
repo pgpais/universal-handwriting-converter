@@ -10,5 +10,6 @@ public enum Format {
     NEONOTES_ARCHIVE,
     INKML,
     HANDSPY_LEGACY,
-    HANDSPY
+    HANDSPY,
+    SVG
 }

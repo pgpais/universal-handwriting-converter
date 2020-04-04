@@ -49,11 +49,19 @@ public class NeoNotesReader extends BaseReader implements PageReader {
             // read header metadata
             page
                     .addMetadata("id", getString(headerBuffer, ID_SIZE))
-                    .addMetadata("version", headerBuffer.getInt())
-                    .addMetadata("noteType", headerBuffer.getInt())
-                    .addMetadata("pageNo", headerBuffer.getInt())
-                    .width((double) headerBuffer.getFloat())
-                    .height((double) headerBuffer.getFloat())
+                    .addMetadata("version", headerBuffer.getInt());
+
+            int noteType = headerBuffer.getInt();
+            int pageNo = headerBuffer.getInt();
+            double innerWidth = (double) headerBuffer.getFloat() * Constants.NCODE_COORDINATES_TO_MM_FACTOR;
+            double innerHeight = (double) headerBuffer.getFloat() * Constants.NCODE_COORDINATES_TO_MM_FACTOR;
+            NCodePaperSize size = NCodePaperSize.getPaperSizeFor(noteType, innerWidth, innerHeight);
+
+            page
+                    .addMetadata("noteType", noteType)
+                    .addMetadata("pageNo", pageNo)
+                    .width(innerWidth)
+                    .height(innerHeight)
                     .addMetadata("createdTime", headerBuffer.getLong())
                     .addMetadata("modifiedTime", headerBuffer.getLong())
                     .addMetadata("dirtyBit", headerBuffer.get() != 0);
@@ -151,9 +159,11 @@ public class NeoNotesReader extends BaseReader implements PageReader {
         for (int c = 0; c < nDots; c++) {
             ByteBuffer dotBuffer = getByteBuffer(bufferedStream, DOT_SIZE);
 
+            double x = (double) dotBuffer.getFloat();
+            double y = (double) dotBuffer.getFloat();
             Dot dot = new Dot()
-                    .x((double) dotBuffer.getFloat())
-                    .y((double) dotBuffer.getFloat())
+                    .x(x * Constants.NCODE_COORDINATES_TO_MM_FACTOR)
+                    .y(y * Constants.NCODE_COORDINATES_TO_MM_FACTOR)
                     .pressure((double) dotBuffer.getFloat());
 
             int timeDiff = 0xFF & dotBuffer.get();
@@ -170,28 +180,6 @@ public class NeoNotesReader extends BaseReader implements PageReader {
 
         return stroke;
     }
-
-    /*private Point mirror(Point p, float x0, float y0, float x1, float y1) {
-        double dx,dy,a,b;
-        long x2,y2;
-
-        dx  = x1 - x0;
-        dy  = y1 - y0;
-
-        a   = (dx * dx - dy * dy) / (dx * dx + dy*dy);
-        b   = 2 * dx * dy / (dx*dx + dy*dy);
-
-        x2  = Math.round(a * (p.x - x0) + b*(p.y - y0) + x0);
-        y2  = Math.round(b * (p.x - x0) - a*(p.y - y0) + y0);
-
-        return new Point(x2, y2);
-    }
-
-    private Point rotate(Point p, float xCenter, float yCenter, double angle) {
-        float xRot = (float) (xCenter + Math.cos(angle) * (p.x - xCenter) - Math.sin(angle) * (p.y - yCenter));
-        float yRot = (float) (yCenter + Math.sin(angle) * (p.x - xCenter) + Math.cos(angle) * (p.y - yCenter));
-        return new Point(xRot, yRot);
-    }*/
 
 
     /**

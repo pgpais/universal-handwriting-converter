@@ -1,5 +1,6 @@
 package pt.up.hs.uhc.models;
 
+import java.io.Serializable;
 import java.util.*;
 
 /**
@@ -7,7 +8,7 @@ import java.util.*;
  *
  * @author José Carlos Paiva <code>josepaiva94@gmail.com</code>
  */
-public class Page {
+public class Page implements Serializable, Cloneable {
 
     private Double width;
     private Double height;
@@ -131,5 +132,10 @@ public class Page {
                 ", metadata=" + metadata +
                 ", strokes=" + strokes +
                 '}';
+    }
+
+    @Override
+    public Page clone() throws CloneNotSupportedException {
+        return (Page) super.clone();
     }
 }

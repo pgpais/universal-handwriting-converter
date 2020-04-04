@@ -12,8 +12,11 @@ import pt.up.hs.uhc.inkml.InkMLReader;
 import pt.up.hs.uhc.inkml.InkMLWriter;
 import pt.up.hs.uhc.models.Page;
 import pt.up.hs.uhc.models.Format;
+import pt.up.hs.uhc.models.Rect;
 import pt.up.hs.uhc.neonotes.NeoNotesReader;
+import pt.up.hs.uhc.svg.SvgWriter;
 import pt.up.hs.uhc.utils.FilenameUtils;
+import pt.up.hs.uhc.utils.PageUtils;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -36,26 +39,18 @@ public class UniversalHandwritingConverter {
     private HandSpyWriter handSpyWriter = new HandSpyWriter();
     private HandSpyLegacyWriter handSpyLegacyWriter = new HandSpyLegacyWriter();
     private InkMLWriter inkMLWriter = new InkMLWriter();
+    private SvgWriter svgWriter = new SvgWriter();
 
     // format
     private Format inFormat = null;
     private Format outFormat = Format.HANDSPY;
     private String filename;
     private InputStream is;
-    private File file = null;
 
     // pages
     private List<Page> pages = new ArrayList<>();
 
     public UniversalHandwritingConverter() {
-    }
-
-    public UniversalHandwritingConverter(
-            Format inFormat, Format outFormat, File file
-    ) {
-        this.inFormat = inFormat;
-        this.outFormat = outFormat;
-        this.file = file;
     }
 
     public UniversalHandwritingConverter(
@@ -151,6 +146,9 @@ public class UniversalHandwritingConverter {
                 case HANDSPY:
                     writePage(os, handSpyWriter);
                     break;
+                case SVG:
+                    writePage(os, svgWriter);
+                    break;
                 default:
                     throw new UnknownFormatException();
             }
@@ -158,6 +156,29 @@ public class UniversalHandwritingConverter {
             throw e;
         } catch (Exception e) {
             throw new UniversalHandwritingConverterException("Could not write file.", e);
+        }
+
+        return this;
+    }
+
+    public UniversalHandwritingConverter center() {
+
+        for (Page page: pages) {
+
+            // calculate page center
+            double pcx = page.getWidth() / 2;
+            double pcy = page.getHeight() / 2;
+
+            // calculate bounding rect center
+            Rect boundingRect = PageUtils.getBoundingRect(page);
+            double bcx = boundingRect.getX1() + (boundingRect.getWidth() / 2);
+            double bcy = boundingRect.getY1() + (boundingRect.getHeight() / 2);
+
+            // calculate translate values
+            double dx = pcx - bcx;
+            double dy = pcy - bcy;
+
+            PageUtils.translate(page, dx, dy);
         }
 
         return this;

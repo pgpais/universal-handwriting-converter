@@ -1,5 +1,6 @@
 package pt.up.hs.uhc.models;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -9,7 +10,7 @@ import java.util.Objects;
  *
  * @author José Carlos Paiva <code>josepaiva94@gmail.com</code>
  */
-public class Dot {
+public class Dot implements Serializable, Cloneable {
 
     private Double x;
     private Double y;
@@ -172,5 +173,10 @@ public class Dot {
                 ", pressure=" + pressure +
                 ", metadata=" + metadata +
                 '}';
+    }
+
+    @Override
+    public Dot clone() throws CloneNotSupportedException {
+        return (Dot) super.clone();
     }
 }

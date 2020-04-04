@@ -44,8 +44,6 @@ public class UniversalHandwritingConverter {
     // format
     private Format inFormat = null;
     private Format outFormat = Format.HANDSPY;
-    private String filename;
-    private InputStream is;
 
     // pages
     private List<Page> pages = new ArrayList<>();
@@ -54,12 +52,10 @@ public class UniversalHandwritingConverter {
     }
 
     public UniversalHandwritingConverter(
-            Format inFormat, Format outFormat, String filename, InputStream is
+            Format inFormat, Format outFormat
     ) {
         this.inFormat = inFormat;
         this.outFormat = outFormat;
-        this.filename = filename;
-        this.is = is;
     }
 
     public UniversalHandwritingConverter inputFormat(Format inFormat) {
@@ -72,61 +68,29 @@ public class UniversalHandwritingConverter {
         return this;
     }
 
-    public UniversalHandwritingConverter file(String filename, InputStream is) {
-        this.filename = filename;
-        this.is = is;
-        return this;
-    }
-
-    public UniversalHandwritingConverter file(File file) throws FileNotFoundException {
-        this.filename = file.getAbsolutePath();
-        this.is = new FileInputStream(file);
-        return this;
-    }
-
-    public UniversalHandwritingConverter readAll() {
-
-        if (filename == null || is == null) {
-            throw new UniversalHandwritingConverterException("File not specified.");
-        }
-
-        Format format;
-        if (inFormat == null) {
-            format = autoDetectFormat();
-        } else {
-            format = inFormat;
-        }
-
+    public UniversalHandwritingConverter file(File file) {
         try {
-            switch (format) {
-                case NEONOTES_ARCHIVE:
-                    pages.addAll(neoNotesReader.readArchive(filename, is));
-                    break;
-                case NEONOTES:
-                    pages.add(neoNotesReader.read(is));
-                    break;
-                case HANDSPY_LEGACY:
-                    pages.add(handSpyLegacyReader.read(is));
-                    break;
-                case INKML:
-                    pages.add(inkMLReader.read(is));
-                    break;
-                case HANDSPY:
-                    pages.add(handSpyReader.read(is));
-                    break;
-                default:
-                    throw new UnknownFormatException();
-            }
-        } catch (UniversalHandwritingConverterException e) {
-            throw e;
-        } catch (Exception e) {
-            throw new UniversalHandwritingConverterException("Could not read file.", e);
+            return file(file.getAbsolutePath(), new FileInputStream(file));
+        } catch (FileNotFoundException e) {
+            throw new UniversalHandwritingConverterException("File not found.");
         }
+    }
 
+    public UniversalHandwritingConverter file(String filename, InputStream is) {
+        read(filename, is);
+        return this;
+    }
+
+    public UniversalHandwritingConverter page(Page page) {
+        this.pages.add(page);
         return this;
     }
 
     public UniversalHandwritingConverter write(OutputStream os) {
+        return write(pages.size() - 1, os);
+    }
+
+    public UniversalHandwritingConverter write(int pageNr, OutputStream os) {
 
         if (outFormat == null) {
             outFormat = Format.HANDSPY;
@@ -138,16 +102,16 @@ public class UniversalHandwritingConverter {
                 case NEONOTES:
                     throw new UnsupportedFormatException();
                 case HANDSPY_LEGACY:
-                    writePage(os, handSpyLegacyWriter);
+                    writePage(pageNr, os, handSpyLegacyWriter);
                     break;
                 case INKML:
-                    writePage(os, inkMLWriter);
+                    writePage(pageNr, os, inkMLWriter);
                     break;
                 case HANDSPY:
-                    writePage(os, handSpyWriter);
+                    writePage(pageNr, os, handSpyWriter);
                     break;
                 case SVG:
-                    writePage(os, svgWriter);
+                    writePage(pageNr, os, svgWriter);
                     break;
                 default:
                     throw new UnknownFormatException();
@@ -195,7 +159,7 @@ public class UniversalHandwritingConverter {
         return pages;
     }
 
-    private Format autoDetectFormat() {
+    private Format autoDetectFormat(String filename) {
 
         String ext = FilenameUtils.getFileExtension(filename);
 
@@ -216,10 +180,50 @@ public class UniversalHandwritingConverter {
         return format;
     }
 
-    private void writePage(OutputStream os, PageWriter writer) throws Exception {
-        if (pages.isEmpty()) {
-            throw new UniversalHandwritingConverterException();
+    private void read(String filename, InputStream is) {
+
+        if (filename == null || is == null) {
+            throw new UniversalHandwritingConverterException("File not specified.");
         }
-        writer.write(pages.get(pages.size() - 1), os);
+
+        Format format;
+        if (inFormat == null) {
+            format = autoDetectFormat(filename);
+        } else {
+            format = inFormat;
+        }
+
+        try {
+            switch (format) {
+                case NEONOTES_ARCHIVE:
+                    pages.addAll(neoNotesReader.readArchive(filename, is));
+                    break;
+                case NEONOTES:
+                    pages.add(neoNotesReader.read(is));
+                    break;
+                case HANDSPY_LEGACY:
+                    pages.add(handSpyLegacyReader.read(is));
+                    break;
+                case INKML:
+                    pages.add(inkMLReader.read(is));
+                    break;
+                case HANDSPY:
+                    pages.add(handSpyReader.read(is));
+                    break;
+                default:
+                    throw new UnknownFormatException();
+            }
+        } catch (UniversalHandwritingConverterException e) {
+            throw e;
+        } catch (Exception e) {
+            throw new UniversalHandwritingConverterException("Could not read file.", e);
+        }
+    }
+
+    private void writePage(int pageNr, OutputStream os, PageWriter writer) throws Exception {
+        if (pages.isEmpty() || pageNr < 0 || pageNr >= pages.size()) {
+            throw new UniversalHandwritingConverterException("No such page.");
+        }
+        writer.write(pages.get(pageNr), os);
     }
 }

@@ -52,14 +52,14 @@ public class SvgWriter implements PageWriter {
                             .append(' ')
                             .append(dot.getY())
                             .append(',');
-                    sumPressure.updateAndGet(v -> v + dot.getPressure());
+                    sumPressure.updateAndGet(v -> v + (dot.getPressure() != null && dot.getPressure() > 0 ? dot.getPressure() : 0.5D));
                 });
         sb
                 .deleteCharAt(sb.length() - 1)
                 .append('\"')
                 .append(' ')
                 .append("stroke-width=\"")
-                .append(sumPressure.get() <= 0 ? 0.5 : sumPressure.get() / stroke.getDots().size())
+                .append(sumPressure.get() / stroke.getDots().size())
                 .append("\"")
                 .append(' ')
                 .append("shape-rendering=\"geometricPrecision\"")

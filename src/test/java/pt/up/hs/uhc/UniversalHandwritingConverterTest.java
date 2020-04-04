@@ -6,9 +6,7 @@ import pt.up.hs.uhc.models.Dot;
 import pt.up.hs.uhc.models.Format;
 import pt.up.hs.uhc.models.Page;
 import pt.up.hs.uhc.models.Stroke;
-import pt.up.hs.uhc.svg.SvgWriter;
 
-import java.io.FileNotFoundException;
 import java.math.BigDecimal;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -22,11 +20,11 @@ import java.util.List;
 public class UniversalHandwritingConverterTest {
 
     @Test
-    public void testReadNeoNotesWithAutoDetect() throws FileNotFoundException {
+    public void testReadNeoNotesWithAutoDetect() {
         UniversalHandwritingConverter uhc = new UniversalHandwritingConverter()
                 .file(TestUtils.openFileForResource("neonotes/single/page_full.data"));
 
-        Page page = uhc.readAll().getPage();
+        Page page = uhc.getPage();
         Assertions.assertEquals("neo", page.getMetadata("id"));
         Assertions.assertEquals(609, page.getMetadata("noteType"));
         Assertions.assertEquals(1576500142905L, page.getMetadata("createdTime"));
@@ -56,12 +54,12 @@ public class UniversalHandwritingConverterTest {
     }
 
     @Test
-    public void testReadNeoNotesWithFormatSpecified() throws FileNotFoundException {
+    public void testReadNeoNotesWithFormatSpecified() {
         UniversalHandwritingConverter uhc = new UniversalHandwritingConverter()
                 .inputFormat(Format.NEONOTES)
                 .file(TestUtils.openFileForResource("neonotes/single/page_full.data"));
 
-        Page page = uhc.readAll().getPage();
+        Page page = uhc.getPage();
         Assertions.assertEquals("neo", page.getMetadata("id"));
         Assertions.assertEquals(609, page.getMetadata("noteType"));
         Assertions.assertEquals(1576500142905L, page.getMetadata("createdTime"));
@@ -91,10 +89,9 @@ public class UniversalHandwritingConverterTest {
     }
 
     @Test
-    public void testReadNeoNotesArchiveWithAutoDetect() throws FileNotFoundException {
+    public void testReadNeoNotesArchiveWithAutoDetect() {
         UniversalHandwritingConverter uhc = new UniversalHandwritingConverter()
-                .file(TestUtils.openFileForResource("neonotes/archive/archive.neonotes.zip"))
-                .readAll();
+                .file(TestUtils.openFileForResource("neonotes/archive/archive.neonotes.zip"));
 
         Assertions.assertEquals(2, uhc.getPages().size());
 
@@ -145,11 +142,10 @@ public class UniversalHandwritingConverterTest {
     }
 
     @Test
-    public void testReadNeoNotesArchiveWithFormatSpecified() throws FileNotFoundException {
+    public void testReadNeoNotesArchiveWithFormatSpecified() {
         UniversalHandwritingConverter uhc = new UniversalHandwritingConverter()
                 .inputFormat(Format.NEONOTES_ARCHIVE)
-                .file(TestUtils.openFileForResource("neonotes/archive/archive.neonotes.zip"))
-                .readAll();
+                .file(TestUtils.openFileForResource("neonotes/archive/archive.neonotes.zip"));
 
         Assertions.assertEquals(2, uhc.getPages().size());
 
@@ -200,10 +196,9 @@ public class UniversalHandwritingConverterTest {
     }
 
     @Test
-    public void testReadInkMLWithAutoDetect() throws FileNotFoundException {
+    public void testReadInkMLWithAutoDetect() {
         UniversalHandwritingConverter uhc = new UniversalHandwritingConverter()
-                .file(TestUtils.openFileForResource("inkml/single/sample-filled.inkml"))
-                .readAll();
+                .file(TestUtils.openFileForResource("inkml/single/sample-filled.inkml"));
 
         Page page = uhc.getPage();
 
@@ -248,11 +243,10 @@ public class UniversalHandwritingConverterTest {
     }
 
     @Test
-    public void testReadInkMLWithFormatSpecified() throws FileNotFoundException {
+    public void testReadInkMLWithFormatSpecified() {
         UniversalHandwritingConverter uhc = new UniversalHandwritingConverter()
                 .inputFormat(Format.INKML)
-                .file(TestUtils.openFileForResource("inkml/single/sample-filled.inkml"))
-                .readAll();
+                .file(TestUtils.openFileForResource("inkml/single/sample-filled.inkml"));
 
         Page page = uhc.getPage();
 
@@ -297,10 +291,9 @@ public class UniversalHandwritingConverterTest {
     }
 
     @Test
-    public void testReadHandSpyWithAutoDetect() throws FileNotFoundException {
+    public void testReadHandSpyWithAutoDetect() {
         UniversalHandwritingConverter uhc = new UniversalHandwritingConverter()
-                .file(TestUtils.openFileForResource("handspy/single/sample-filled.json"))
-                .readAll();
+                .file(TestUtils.openFileForResource("handspy/single/sample-filled.json"));
 
         Page page = uhc.getPage();
 
@@ -346,11 +339,10 @@ public class UniversalHandwritingConverterTest {
     }
 
     @Test
-    public void testReadHandSpyWithFormatSpecified() throws FileNotFoundException {
+    public void testReadHandSpyWithFormatSpecified() {
         UniversalHandwritingConverter uhc = new UniversalHandwritingConverter()
                 .inputFormat(Format.HANDSPY)
-                .file(TestUtils.openFileForResource("handspy/single/sample-filled.json"))
-                .readAll();
+                .file(TestUtils.openFileForResource("handspy/single/sample-filled.json"));
 
         Page page = uhc.getPage();
 
@@ -396,10 +388,9 @@ public class UniversalHandwritingConverterTest {
     }
 
     @Test
-    public void testReadHandSpyLegacyWithAutoDetect() throws FileNotFoundException {
+    public void testReadHandSpyLegacyWithAutoDetect() {
         UniversalHandwritingConverter uhc = new UniversalHandwritingConverter()
-                .file(TestUtils.openFileForResource("handspy/legacy/single/sample-filled.xml"))
-                .readAll();
+                .file(TestUtils.openFileForResource("handspy/legacy/single/sample-filled.xml"));
 
         Page page = uhc.getPage();
 
@@ -447,11 +438,10 @@ public class UniversalHandwritingConverterTest {
     }
 
     @Test
-    public void testReadHandSpyLegacyWithFormatSpecified() throws FileNotFoundException {
+    public void testReadHandSpyLegacyWithFormatSpecified() {
         UniversalHandwritingConverter uhc = new UniversalHandwritingConverter()
                 .inputFormat(Format.HANDSPY_LEGACY)
-                .file(TestUtils.openFileForResource("handspy/legacy/single/sample-filled.xml"))
-                .readAll();
+                .file(TestUtils.openFileForResource("handspy/legacy/single/sample-filled.xml"));
 
         Page page = uhc.getPage();
 
@@ -498,14 +488,20 @@ public class UniversalHandwritingConverterTest {
         Assertions.assertEquals(new Dot(39D, 40D, 10000L), secondStrokeDots.get(9));
     }
 
-    /*@Test
+    @Test
     public void testWriteSvg() throws Exception {
-        UniversalHandwritingConverter uhc = new UniversalHandwritingConverter()
-                .file(TestUtils.openFileForResource("neonotes/single/page_full.data"));
+        new UniversalHandwritingConverter()
+                .file(TestUtils.openFileForResource("neonotes/single/page_full.data"))
+                .center()
+                .outputFormat(Format.SVG)
+                .write(Files.newOutputStream(Paths.get("page.svg")));
+    }
 
-        Page page = uhc.readAll().center().getPage();
-
-        new SvgWriter()
-                .write(page, Files.newOutputStream(Paths.get("page.svg")));
-    }*/
+    @Test
+    public void testWriteHandSpyJson() throws Exception {
+        new UniversalHandwritingConverter()
+                .file(TestUtils.openFileForResource("neonotes/single/page_full.data"))
+                .center()
+                .write(Files.newOutputStream(Paths.get("page.json")));
+    }
 }

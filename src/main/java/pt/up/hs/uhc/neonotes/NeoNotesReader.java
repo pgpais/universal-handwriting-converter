@@ -55,7 +55,7 @@ public class NeoNotesReader extends BaseReader implements PageReader {
             int pageNo = headerBuffer.getInt();
             double innerWidth = (double) headerBuffer.getFloat() * Constants.NCODE_COORDINATES_TO_MM_FACTOR;
             double innerHeight = (double) headerBuffer.getFloat() * Constants.NCODE_COORDINATES_TO_MM_FACTOR;
-            NCodePaperSize size = NCodePaperSize.getPaperSizeFor(noteType, innerWidth, innerHeight);
+            // NCodePaperSize size = NCodePaperSize.getPaperSizeFor(noteType, innerWidth, innerHeight);
 
             page
                     .addMetadata("noteType", noteType)

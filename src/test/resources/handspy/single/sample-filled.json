@@ -9,32 +9,32 @@
       "startTime": 0,
       "endTime": 5000,
       "dots": [
-        { "x": 2, "y": 4, "pressure": 0.45677, "timestamp": 500 },
-        { "x": 4, "y": 7, "pressure": 0.65766, "timestamp": 1000 },
-        { "x": 10, "y": 13, "pressure": 0.48777, "timestamp": 1500 },
-        { "x": 12, "y": 14, "pressure": 0.51113, "timestamp": 2000 },
-        { "x": 15, "y": 17, "pressure": 0.77355, "timestamp": 2500 },
-        { "x": 16, "y": 18, "pressure": 0.45677, "timestamp": 3000 },
-        { "x": 20, "y": 22, "pressure": 0.65330, "timestamp": 3500 },
-        { "x": 20, "y": 24, "pressure": 0.75424, "timestamp": 4000 },
-        { "x": 20, "y": 27, "pressure": 0.31233, "timestamp": 4500 },
-        { "x": 20, "y": 28, "pressure": 0.23489, "timestamp": 5000 }
+        { "x": 2, "y": 4, "pressure": 0.457, "timestamp": 500 },
+        { "x": 4, "y": 7, "pressure": 0.658, "timestamp": 1000 },
+        { "x": 10, "y": 13, "pressure": 0.488, "timestamp": 1500 },
+        { "x": 12, "y": 14, "pressure": 0.511, "timestamp": 2000 },
+        { "x": 15, "y": 17, "pressure": 0.774, "timestamp": 2500 },
+        { "x": 16, "y": 18, "pressure": 0.458, "timestamp": 3000 },
+        { "x": 20, "y": 22, "pressure": 0.653, "timestamp": 3500 },
+        { "x": 20, "y": 24, "pressure": 0.754, "timestamp": 4000 },
+        { "x": 20, "y": 27, "pressure": 0.312, "timestamp": 4500 },
+        { "x": 20, "y": 28, "pressure": 0.235, "timestamp": 5000 }
       ]
     },
     {
       "startTime": 5000,
       "endTime": 10000,
       "dots": [
-        { "x": 30, "y": 40, "pressure": 0.48777, "timestamp": 5500 },
-        { "x": 31, "y": 40, "pressure": 0.65330, "timestamp": 6000 },
-        { "x": 32, "y": 40, "pressure": 0.23489, "timestamp": 6500 },
-        { "x": 33, "y": 40, "pressure": 0.51113, "timestamp": 7000 },
-        { "x": 34, "y": 40, "pressure": 0.77355, "timestamp": 7500 },
-        { "x": 35, "y": 40, "pressure": 0.45677, "timestamp": 8000 },
-        { "x": 36, "y": 40, "pressure": 0.75424, "timestamp": 8500 },
-        { "x": 37, "y": 40, "pressure": 0.31233, "timestamp": 9000 },
-        { "x": 38, "y": 40, "pressure": 0.65766, "timestamp": 9500 },
-        { "x": 39, "y": 40, "pressure": 0.45677, "timestamp": 10000 }
+        { "x": 30, "y": 40, "pressure": 0.488, "timestamp": 5500 },
+        { "x": 31, "y": 40, "pressure": 0.653, "timestamp": 6000 },
+        { "x": 32, "y": 40, "pressure": 0.235, "timestamp": 6500 },
+        { "x": 33, "y": 40, "pressure": 0.511, "timestamp": 7000 },
+        { "x": 34, "y": 40, "pressure": 0.774, "timestamp": 7500 },
+        { "x": 35, "y": 40, "pressure": 0.458, "timestamp": 8000 },
+        { "x": 36, "y": 40, "pressure": 0.754, "timestamp": 8500 },
+        { "x": 37, "y": 40, "pressure": 0.312, "timestamp": 9000 },
+        { "x": 38, "y": 40, "pressure": 0.658, "timestamp": 9500 },
+        { "x": 39, "y": 40, "pressure": 0.457, "timestamp": 10000 }
       ]
     }
   ]

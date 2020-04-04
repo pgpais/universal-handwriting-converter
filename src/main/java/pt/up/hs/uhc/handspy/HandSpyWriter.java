@@ -3,6 +3,7 @@ package pt.up.hs.uhc.handspy;
 import com.github.cliftonlabs.json_simple.JsonArray;
 import com.github.cliftonlabs.json_simple.JsonObject;
 import com.github.cliftonlabs.json_simple.Jsoner;
+import pt.up.hs.uhc.base.Constants;
 import pt.up.hs.uhc.base.PageWriter;
 import pt.up.hs.uhc.handspy.keys.DotKeys;
 import pt.up.hs.uhc.handspy.keys.PageKeys;
@@ -11,6 +12,7 @@ import pt.up.hs.uhc.models.Dot;
 import pt.up.hs.uhc.models.Page;
 import pt.up.hs.uhc.models.Stroke;
 import pt.up.hs.uhc.utils.JsonUtils;
+import pt.up.hs.uhc.utils.NumberUtils;
 
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
@@ -85,12 +87,12 @@ public class HandSpyWriter implements PageWriter {
 
         JsonObject jsonObject = new JsonObject();
 
-        jsonObject.put(DotKeys.X, dot.getX());
-        jsonObject.put(DotKeys.Y, dot.getY());
+        jsonObject.put(DotKeys.X, NumberUtils.roundAvoid(dot.getX(), Constants.WRITE_DOUBLE_PRECISION));
+        jsonObject.put(DotKeys.Y, NumberUtils.roundAvoid(dot.getY(), Constants.WRITE_DOUBLE_PRECISION));
         jsonObject.put(DotKeys.TIMESTAMP, dot.getTimestamp());
         jsonObject.put(DotKeys.TYPE, dot.getType().name());
 
-        jsonObject.put(DotKeys.PRESSURE, dot.getPressure());
+        jsonObject.put(DotKeys.PRESSURE, NumberUtils.roundAvoid(dot.getPressure(), Constants.WRITE_DOUBLE_PRECISION));
 
         if (!dot.getMetadata().isEmpty()) {
             jsonObject.put(DotKeys.METADATA, JsonUtils.fromMap(dot.getMetadata()));

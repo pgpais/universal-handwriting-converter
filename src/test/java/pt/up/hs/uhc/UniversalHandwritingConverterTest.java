@@ -54,10 +54,11 @@ public class UniversalHandwritingConverterTest {
     }
 
     @Test
-    public void testReadNeoNotesWithFormatSpecified() {
+    public void testReadNeoNotesWithFormatSpecifiedNormalized() {
         UniversalHandwritingConverter uhc = new UniversalHandwritingConverter()
                 .inputFormat(Format.NEONOTES)
-                .file(TestUtils.openFileForResource("neonotes/single/page_full.data"));
+                .file(TestUtils.openFileForResource("neonotes/single/page_full.data"))
+                .normalize(true, 3);
 
         Page page = uhc.getPage();
         Assertions.assertEquals("neo", page.getMetadata("id"));
@@ -66,26 +67,26 @@ public class UniversalHandwritingConverterTest {
         Assertions.assertEquals(1576500328443L, page.getMetadata("modifiedTime"));
         Assertions.assertEquals(79, page.getMetadata("pageNo"));
         Assertions.assertEquals(5, page.getMetadata("version"));
-        Assertions.assertEquals(210.225928D, page.getWidth(), TestUtils.EPSILON);
-        Assertions.assertEquals(271.935572D, page.getHeight(), TestUtils.EPSILON);
+        Assertions.assertEquals(210.226D, page.getWidth(), TestUtils.EPSILON);
+        Assertions.assertEquals(271.936D, page.getHeight(), TestUtils.EPSILON);
 
         Assertions.assertEquals(643, page.getStrokes().size());
 
         Stroke firstStroke = page.getStrokes().get(0);
-        Assertions.assertEquals(1576499042448L, firstStroke.getStartTime());
-        Assertions.assertEquals(1576499043432L, firstStroke.getEndTime());
+        Assertions.assertEquals(0L, firstStroke.getStartTime());
+        Assertions.assertEquals(984L, firstStroke.getEndTime());
         Assertions.assertEquals(97, firstStroke.getDots().size());
-        Assertions.assertEquals(1576499042448L, firstStroke.getDots().get(0).getTimestamp());
-        Assertions.assertEquals(28.8984257D, firstStroke.getDots().get(0).getX(), TestUtils.EPSILON);
-        Assertions.assertEquals(72.8031712D, firstStroke.getDots().get(0).getY(), TestUtils.EPSILON);
+        Assertions.assertEquals(0L, firstStroke.getDots().get(0).getTimestamp());
+        Assertions.assertEquals(28.898D, firstStroke.getDots().get(0).getX(), TestUtils.EPSILON);
+        Assertions.assertEquals(72.803D, firstStroke.getDots().get(0).getY(), TestUtils.EPSILON);
 
         Stroke lastStroke = page.getStrokes().get(page.getStrokes().size() - 1);
-        Assertions.assertEquals(1576500049236L, lastStroke.getStartTime());
-        Assertions.assertEquals(1576500049319L, lastStroke.getEndTime());
+        Assertions.assertEquals(1006788L, lastStroke.getStartTime());
+        Assertions.assertEquals(1006871L, lastStroke.getEndTime());
         Assertions.assertEquals(6, lastStroke.getDots().size());
-        Assertions.assertEquals(1576500049236L, lastStroke.getDots().get(0).getTimestamp());
-        Assertions.assertEquals(86.1737297D, lastStroke.getDots().get(0).getX(), TestUtils.EPSILON);
-        Assertions.assertEquals(280.9002883D, lastStroke.getDots().get(0).getY(), TestUtils.EPSILON);
+        Assertions.assertEquals(1006788L, lastStroke.getDots().get(0).getTimestamp());
+        Assertions.assertEquals(86.174D, lastStroke.getDots().get(0).getX(), TestUtils.EPSILON);
+        Assertions.assertEquals(280.900D, lastStroke.getDots().get(0).getY(), TestUtils.EPSILON);
     }
 
     @Test

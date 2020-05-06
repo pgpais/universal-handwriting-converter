@@ -56,6 +56,40 @@ public class PageUtils {
                 });
     }
 
+    public static void normalize(Page page, int decimalPlaces) {
+
+        page
+                .width(NumberUtils.roundAvoid(page.getWidth(), decimalPlaces))
+                .height(NumberUtils.roundAvoid(page.getHeight(), decimalPlaces));
+
+        getDotStream(page)
+                .forEach(dot -> {
+                    dot
+                            .x(NumberUtils.roundAvoid(dot.getX(), decimalPlaces))
+                            .y(NumberUtils.roundAvoid(dot.getY(), decimalPlaces))
+                            .pressure(NumberUtils.roundAvoid(dot.getPressure(), decimalPlaces));
+                });
+    }
+
+    public static void normalizeTime(Page page) {
+        if (page.getStrokes().isEmpty()) {
+            return;
+        }
+
+        long startTime = page.getStrokes().get(0).getStartTime();
+
+        page.getStrokes().parallelStream()
+                .forEach(stroke -> {
+                    stroke
+                            .startTime(stroke.getStartTime() - startTime)
+                            .endTime(stroke.getEndTime() - startTime);
+                    stroke.getDots().parallelStream()
+                            .forEach(dot -> {
+                                dot.timestamp(dot.getTimestamp() - startTime);
+                            });
+                });
+    }
+
     private static Stream<Dot> getDotStream(Page page) {
         return page.getStrokes()
                 .parallelStream()

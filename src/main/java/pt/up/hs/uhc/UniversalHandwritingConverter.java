@@ -148,6 +148,24 @@ public class UniversalHandwritingConverter {
         return this;
     }
 
+    public UniversalHandwritingConverter normalize(boolean time) {
+        return normalize(time, -1);
+    }
+
+    public UniversalHandwritingConverter normalize(boolean time, int decimalPlaces) {
+
+        for (Page page: pages) {
+            if (time) {
+                PageUtils.normalizeTime(page);
+            }
+            if (decimalPlaces >= 0) {
+                PageUtils.normalize(page, decimalPlaces);
+            }
+        }
+
+        return this;
+    }
+
     public Page getPage() {
         if (pages.isEmpty()) {
             throw new UniversalHandwritingConverterException("No pages read yet.");

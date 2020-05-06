@@ -87,12 +87,12 @@ public class HandSpyWriter implements PageWriter {
 
         JsonObject jsonObject = new JsonObject();
 
-        jsonObject.put(DotKeys.X, NumberUtils.roundAvoid(dot.getX(), Constants.WRITE_DOUBLE_PRECISION));
-        jsonObject.put(DotKeys.Y, NumberUtils.roundAvoid(dot.getY(), Constants.WRITE_DOUBLE_PRECISION));
+        jsonObject.put(DotKeys.X, dot.getX());
+        jsonObject.put(DotKeys.Y, dot.getY());
         jsonObject.put(DotKeys.TIMESTAMP, dot.getTimestamp());
         jsonObject.put(DotKeys.TYPE, dot.getType().name());
 
-        jsonObject.put(DotKeys.PRESSURE, NumberUtils.roundAvoid(dot.getPressure(), Constants.WRITE_DOUBLE_PRECISION));
+        jsonObject.put(DotKeys.PRESSURE, dot.getPressure());
 
         if (!dot.getMetadata().isEmpty()) {
             jsonObject.put(DotKeys.METADATA, JsonUtils.fromMap(dot.getMetadata()));

@@ -19,7 +19,7 @@ public class SvgWriter implements PageWriter {
     public void write(Page page, OutputStream os) throws Exception {
 
         StringBuilder sb = new StringBuilder()
-                .append("<svg height=\"")
+                .append("<svg xmlns=\"http://www.w3.org/2000/svg\" height=\"")
                 .append(page.getHeight())
                 .append("\" width=\"")
                 .append(page.getWidth())

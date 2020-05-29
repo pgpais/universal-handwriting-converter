@@ -503,6 +503,7 @@ public class UniversalHandwritingConverterTest {
         new UniversalHandwritingConverter()
                 .file(TestUtils.openFileForResource("neonotes/single/page_full.data"))
                 .center()
+                .normalize(true, 3)
                 .write(Files.newOutputStream(Paths.get("page.json")));
     }
 }

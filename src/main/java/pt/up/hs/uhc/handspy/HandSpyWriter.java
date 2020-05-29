@@ -9,6 +9,7 @@ import pt.up.hs.uhc.handspy.keys.DotKeys;
 import pt.up.hs.uhc.handspy.keys.PageKeys;
 import pt.up.hs.uhc.handspy.keys.StrokeKeys;
 import pt.up.hs.uhc.models.Dot;
+import pt.up.hs.uhc.models.DotType;
 import pt.up.hs.uhc.models.Page;
 import pt.up.hs.uhc.models.Stroke;
 import pt.up.hs.uhc.utils.JsonUtils;
@@ -90,7 +91,10 @@ public class HandSpyWriter implements PageWriter {
         jsonObject.put(DotKeys.X, dot.getX());
         jsonObject.put(DotKeys.Y, dot.getY());
         jsonObject.put(DotKeys.TIMESTAMP, dot.getTimestamp());
-        jsonObject.put(DotKeys.TYPE, dot.getType().name());
+
+        if (!dot.getType().equals(DotType.DOWN)) {
+            jsonObject.put(DotKeys.TYPE, dot.getType().name());
+        }
 
         jsonObject.put(DotKeys.PRESSURE, dot.getPressure());
 

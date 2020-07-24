@@ -1,5 +1,6 @@
 package pt.up.hs.uhc.svg;
 
+import pt.up.hs.uhc.base.Constants;
 import pt.up.hs.uhc.base.PageWriter;
 import pt.up.hs.uhc.models.Page;
 import pt.up.hs.uhc.models.Stroke;
@@ -48,9 +49,9 @@ public class SvgWriter implements PageWriter {
         stroke.getDots().parallelStream()
                 .forEachOrdered(dot -> {
                     sb
-                            .append(dot.getX())
+                            .append(String.format(Constants.WRITE_DOUBLE_FORMAT, dot.getX()))
                             .append(' ')
-                            .append(dot.getY())
+                            .append(String.format(Constants.WRITE_DOUBLE_FORMAT, dot.getY()))
                             .append(',');
                     sumPressure.updateAndGet(v -> v + (dot.getPressure() != null && dot.getPressure() > 0 ? dot.getPressure() : 0.5D));
                 });
@@ -59,7 +60,7 @@ public class SvgWriter implements PageWriter {
                 .append('\"')
                 .append(' ')
                 .append("stroke-width=\"")
-                .append(sumPressure.get() / stroke.getDots().size())
+                .append(String.format("%.3f", sumPressure.get() / stroke.getDots().size()))
                 .append("\"")
                 .append(' ')
                 .append("shape-rendering=\"geometricPrecision\"")

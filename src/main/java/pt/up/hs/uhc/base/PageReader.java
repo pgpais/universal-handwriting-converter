@@ -19,7 +19,7 @@ public interface PageReader {
      * @return {@link Page} data from page.
      * @throws Exception if an exception occurs while reading data.
      */
-    Page read(File file) throws Exception;
+    Page readSingle(File file) throws Exception;
 
     /**
      * Reads a page of handwriting data, provided an {@link InputStream} of its
@@ -30,5 +30,5 @@ public interface PageReader {
      * @return {@link Page} data from page.
      * @throws Exception if an exception occurs while reading data.
      */
-    Page read(InputStream is) throws Exception;
+    Page readSingle(InputStream is) throws Exception;
 }

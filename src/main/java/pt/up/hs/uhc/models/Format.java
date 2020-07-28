@@ -8,6 +8,7 @@ package pt.up.hs.uhc.models;
 public enum Format {
     NEONOTES,
     NEONOTES_ARCHIVE,
+    LIVESCRIBE_PDF,
     INKML,
     HANDSPY_LEGACY,
     HANDSPY,

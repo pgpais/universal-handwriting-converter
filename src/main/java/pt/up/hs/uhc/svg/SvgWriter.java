@@ -17,7 +17,7 @@ import java.util.concurrent.atomic.AtomicReference;
 public class SvgWriter implements PageWriter {
 
     @Override
-    public void write(Page page, OutputStream os) throws Exception {
+    public void writeSingle(Page page, OutputStream os) throws Exception {
 
         StringBuilder sb = new StringBuilder()
                 .append("<svg xmlns=\"http://www.w3.org/2000/svg\" height=\"")

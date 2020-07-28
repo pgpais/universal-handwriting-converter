@@ -2,7 +2,7 @@ package pt.up.hs.uhc.neonotes;
 
 import org.apache.commons.compress.archivers.tar.TarArchiveEntry;
 import org.apache.commons.compress.archivers.tar.TarArchiveInputStream;
-import pt.up.hs.uhc.base.BaseReader;
+import pt.up.hs.uhc.base.BaseArchiveReader;
 import pt.up.hs.uhc.base.PageReader;
 import pt.up.hs.uhc.models.Dot;
 import pt.up.hs.uhc.models.Page;
@@ -21,7 +21,7 @@ import java.util.zip.ZipInputStream;
  *
  * @author José Carlos Paiva <code>josepaiva94@gmail.com</code>
  */
-public class NeoNotesReader extends BaseReader implements PageReader {
+public class NeoNotesReader extends BaseArchiveReader implements PageReader {
 
     // basic sizes
     private static final int BYTE_SIZE = 1;
@@ -38,7 +38,12 @@ public class NeoNotesReader extends BaseReader implements PageReader {
     private static final int BUFFER_SIZE = 4096;
 
     @Override
-    public Page read(InputStream inputStream) throws IOException {
+    public Page readSingle(File file) throws Exception {
+        return readSingle(new FileInputStream(file));
+    }
+
+    @Override
+    public Page readSingle(InputStream inputStream) throws IOException {
 
         Page page = new Page();
 
@@ -100,7 +105,7 @@ public class NeoNotesReader extends BaseReader implements PageReader {
                     baos.write(bytes, 0, count);
                 }
 
-                pages.add(read(new ByteArrayInputStream(baos.toByteArray())));
+                pages.add(readSingle(new ByteArrayInputStream(baos.toByteArray())));
 
                 baos.close();
             }
@@ -123,7 +128,7 @@ public class NeoNotesReader extends BaseReader implements PageReader {
                     baos.write(bytes, 0, count);
                 }
 
-                pages.add(read(new ByteArrayInputStream(baos.toByteArray())));
+                pages.add(readSingle(new ByteArrayInputStream(baos.toByteArray())));
 
                 baos.close();
             }

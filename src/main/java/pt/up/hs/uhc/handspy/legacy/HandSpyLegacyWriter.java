@@ -20,7 +20,7 @@ import java.io.OutputStream;
 public class HandSpyLegacyWriter implements PageWriter {
 
     @Override
-    public void write(Page page, OutputStream os) throws Exception {
+    public void writeSingle(Page page, OutputStream os) throws Exception {
 
         // convert
         Protocol protocol = new Protocol();

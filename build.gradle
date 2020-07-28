@@ -33,6 +33,7 @@ dependencies {
     implementation "org.glassfish.jaxb:jaxb-runtime:${jaxb_runtime_version}"
     implementation "javax.xml.bind:jaxb-api:${jaxb_api_version}"
     implementation "com.github.cliftonlabs:json-simple:${json_simple_version}"
+    implementation "org.apache.pdfbox:pdfbox:${pdfbox_version}"
 
     // Use JUnit Jupiter API for testing.
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.5.2'

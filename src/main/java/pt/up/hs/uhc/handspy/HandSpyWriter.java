@@ -27,7 +27,7 @@ import java.io.Writer;
 public class HandSpyWriter implements PageWriter {
 
     @Override
-    public void write(Page page, OutputStream os) throws Exception {
+    public void writeSingle(Page page, OutputStream os) throws Exception {
 
         JsonObject pageJson = new JsonObject();
 

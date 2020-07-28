@@ -1,35 +1,37 @@
 package pt.up.hs.uhc.inkml;
 
-import org.apache.commons.compress.archivers.tar.TarArchiveInputStream;
-import pt.up.hs.uhc.base.BaseReader;
-import pt.up.hs.uhc.base.PageReader;
-import pt.up.hs.uhc.exceptions.UnsupportedFormatException;
-import pt.up.hs.uhc.models.Dot;
-import pt.up.hs.uhc.models.DotType;
-import pt.up.hs.uhc.models.Page;
-import pt.up.hs.uhc.models.Stroke;
 import org.w3._2003.inkml.AnnotationType;
 import org.w3._2003.inkml.InkType;
 import org.w3._2003.inkml.ObjectFactory;
 import org.w3._2003.inkml.TraceType;
+import pt.up.hs.uhc.base.PageReader;
+import pt.up.hs.uhc.models.Dot;
+import pt.up.hs.uhc.models.DotType;
+import pt.up.hs.uhc.models.Page;
+import pt.up.hs.uhc.models.Stroke;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.Unmarshaller;
 import javax.xml.transform.stream.StreamSource;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.InputStream;
-import java.util.List;
-import java.util.zip.ZipInputStream;
 
 /**
  * Reader for InkML files.
  *
  * @author José Carlos Paiva <code>josepaiva94@gmail.com</code>
  */
-public class InkMLReader extends BaseReader {
+public class InkMLReader implements PageReader {
 
     @Override
-    public Page read(InputStream is) throws Exception {
+    public Page readSingle(File file) throws Exception {
+        return readSingle(new FileInputStream(file));
+    }
+
+    @Override
+    public Page readSingle(InputStream is) throws Exception {
 
         // unmarshal to input stream
         InkType ink;
@@ -71,16 +73,6 @@ public class InkMLReader extends BaseReader {
         }
 
         return page;
-    }
-
-    @Override
-    public List<Page> readArchive(ZipInputStream zis) {
-        throw new UnsupportedFormatException();
-    }
-
-    @Override
-    public List<Page> readArchive(TarArchiveInputStream tais) {
-        throw new UnsupportedFormatException();
     }
 
     private Stroke readStroke(long captureStartTime, TraceType trace) {

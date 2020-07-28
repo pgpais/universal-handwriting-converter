@@ -9,7 +9,6 @@ import pt.up.hs.uhc.models.Stroke;
 
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
-import java.nio.charset.StandardCharsets;
 
 /**
  * Test InkML writer.
@@ -38,7 +37,7 @@ public class InkMLWriterTest {
                 );
         // write actual page
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        new InkMLWriter().write(page, baos);
+        new InkMLWriter().writeSingle(page, baos);
 
         // check
         Assertions.assertArrayEquals(expected, baos.toByteArray());
@@ -90,7 +89,7 @@ public class InkMLWriterTest {
 
         // write actual page
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        new InkMLWriter().write(page, baos);
+        new InkMLWriter().writeSingle(page, baos);
 
         // check
         Assertions.assertArrayEquals(expected, baos.toByteArray());

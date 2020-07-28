@@ -23,7 +23,7 @@ public class NeoNotesReaderTest {
     public void testCompletePage() throws IOException {
         InputStream is = TestUtils.openReadStreamForResource("neonotes/single/page_full.data");
 
-        Page page = new NeoNotesReader().read(is);
+        Page page = new NeoNotesReader().readSingle(is);
         Assertions.assertEquals("neo", page.getMetadata("id"));
         Assertions.assertEquals(609, page.getMetadata("noteType"));
         Assertions.assertEquals(1576500142905L, page.getMetadata("createdTime"));
@@ -56,7 +56,7 @@ public class NeoNotesReaderTest {
     public void testEmptyPage() throws Exception {
         InputStream is = TestUtils.openReadStreamForResource("neonotes/single/page_empty.data");
 
-        Page page = new NeoNotesReader().read(is);
+        Page page = new NeoNotesReader().readSingle(is);
         Assertions.assertEquals("neo", page.getMetadata("id"));
         Assertions.assertEquals(609, page.getMetadata("noteType"));
         Assertions.assertEquals(1576500142563L, page.getMetadata("createdTime"));

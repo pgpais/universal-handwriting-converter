@@ -3,15 +3,12 @@ package pt.up.hs.uhc.handspy.legacy;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import pt.up.hs.uhc.TestUtils;
-import pt.up.hs.uhc.handspy.HandSpyWriter;
-import pt.up.hs.uhc.inkml.InkMLWriter;
 import pt.up.hs.uhc.models.Dot;
 import pt.up.hs.uhc.models.Page;
 import pt.up.hs.uhc.models.Stroke;
 
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
-import java.nio.charset.StandardCharsets;
 
 /**
  * HandSpy legacy format writer test.
@@ -43,7 +40,7 @@ public class HandSpyLegacyWriterTest {
                 );
         // write actual page
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        new HandSpyLegacyWriter().write(page, baos);
+        new HandSpyLegacyWriter().writeSingle(page, baos);
 
         // check
         Assertions.assertArrayEquals(expected, baos.toByteArray());
@@ -97,7 +94,7 @@ public class HandSpyLegacyWriterTest {
 
         // write actual page
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        new HandSpyLegacyWriter().write(page, baos);
+        new HandSpyLegacyWriter().writeSingle(page, baos);
 
         // check
         Assertions.assertArrayEquals(expected, baos.toByteArray());

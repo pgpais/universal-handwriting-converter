@@ -16,12 +16,7 @@ import java.util.zip.ZipInputStream;
  *
  * @author José Carlos Paiva <code>josepaiva94@gmail.com</code>
  */
-public abstract class BaseReader implements PageReader, ArchiveReader {
-
-    @Override
-    public Page read(File file) throws Exception {
-        return read(new FileInputStream(file));
-    }
+public abstract class BaseArchiveReader implements ArchiveReader {
 
     @Override
     public List<Page> readArchive(String filename, InputStream is) throws Exception {

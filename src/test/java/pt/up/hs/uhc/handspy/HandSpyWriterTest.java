@@ -23,7 +23,7 @@ public class HandSpyWriterTest {
 
         // expected
         InputStream is = TestUtils.openReadStreamForResource("handspy/single/sample-empty.json");
-        Page expectedPage = new HandSpyReader().read(is);
+        Page expectedPage = new HandSpyReader().readSingle(is);
 
         // actual
         Page page = new Page()
@@ -38,10 +38,10 @@ public class HandSpyWriterTest {
 
         // write actual page
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        new HandSpyWriter().write(page, baos);
+        new HandSpyWriter().writeSingle(page, baos);
         // read what was written
         Page actualPage = new HandSpyReader()
-                .read(new ByteArrayInputStream(baos.toByteArray()));
+                .readSingle(new ByteArrayInputStream(baos.toByteArray()));
 
         // check
         Assertions.assertEquals(expectedPage, actualPage);
@@ -51,7 +51,7 @@ public class HandSpyWriterTest {
     public void testSampleFilled() throws Exception {
         // expected
         InputStream is = TestUtils.openReadStreamForResource("handspy/single/sample-filled.json");
-        Page expectedPage = new HandSpyReader().read(is);
+        Page expectedPage = new HandSpyReader().readSingle(is);
 
         // actual
         Page page = new Page()
@@ -91,11 +91,11 @@ public class HandSpyWriterTest {
 
         // write actual page
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        new HandSpyWriter().write(page, baos);
+        new HandSpyWriter().writeSingle(page, baos);
 
         // read what was written
         Page actualPage = new HandSpyReader()
-                .read(new ByteArrayInputStream(baos.toByteArray()));
+                .readSingle(new ByteArrayInputStream(baos.toByteArray()));
 
         // check
         Assertions.assertEquals(expectedPage, actualPage);

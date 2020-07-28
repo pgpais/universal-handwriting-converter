@@ -17,12 +17,13 @@ import java.util.List;
  */
 public class InkMLReaderTest {
 
+
     @Test
     public void testSampleEmptyPage() throws Exception {
 
         InputStream is = TestUtils.openReadStreamForResource("inkml/single/sample-empty.inkml");
 
-        Page page = new InkMLReader().read(is);
+        Page page = new InkMLReader().readSingle(is);
 
         Assertions.assertEquals(300D, page.getWidth(), TestUtils.EPSILON);
         Assertions.assertEquals(400D, page.getHeight(), TestUtils.EPSILON);
@@ -40,7 +41,7 @@ public class InkMLReaderTest {
 
         InputStream is = TestUtils.openReadStreamForResource("inkml/single/sample-filled.inkml");
 
-        Page page = new InkMLReader().read(is);
+        Page page = new InkMLReader().readSingle(is);
 
         Assertions.assertEquals(300D, page.getWidth(), TestUtils.EPSILON);
         Assertions.assertEquals(400D, page.getHeight(), TestUtils.EPSILON);

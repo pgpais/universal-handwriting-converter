@@ -11,4 +11,8 @@ public class UnknownFormatException extends UniversalHandwritingConverterExcepti
     public UnknownFormatException() {
         super("Could detect format. Try to specify type.");
     }
+
+    public UnknownFormatException(String message) {
+        super(message);
+    }
 }

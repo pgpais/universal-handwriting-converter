@@ -1,5 +1,7 @@
 package pt.up.hs.uhc.models;
 
+import pt.up.hs.uhc.handspy.keys.PageMetadataKeys;
+
 import java.io.Serializable;
 import java.util.*;
 
@@ -83,6 +85,46 @@ public class Page implements Serializable, Cloneable {
 
     public Page addMetadata(String key, Object value) {
         this.metadata.put(key, value);
+        return this;
+    }
+
+    public Page addMetadataId(String id) {
+        this.metadata.put(PageMetadataKeys.ID.getKey(), id);
+        return this;
+    }
+
+    public Page addMetadataVersion(String version) {
+        this.metadata.put(PageMetadataKeys.VERSION.getKey(), version);
+        return this;
+    }
+
+    public Page addMetadataPaperType(String paperType) {
+        this.metadata.put(PageMetadataKeys.PAPER_TYPE.getKey(), paperType);
+        return this;
+    }
+
+    public Page addMetadataPenId(String penId) {
+        this.metadata.put(PageMetadataKeys.PEN_ID.getKey(), penId);
+        return this;
+    }
+
+    public Page addMetadataPenSerialNo(String penSerialNo) {
+        this.metadata.put(PageMetadataKeys.PEN_SERIAL_NUMBER.getKey(), penSerialNo);
+        return this;
+    }
+
+    public Page addMetadataPenManufacturer(String penManufacturer) {
+        this.metadata.put(PageMetadataKeys.PEN_MANUFACTURER.getKey(), penManufacturer);
+        return this;
+    }
+
+    public Page addMetadataPenModel(String penModel) {
+        this.metadata.put(PageMetadataKeys.PEN_MODEL.getKey(), penModel);
+        return this;
+    }
+
+    public Page addMetadataPageNo(Integer pageNo) {
+        this.metadata.put(PageMetadataKeys.PAGE_NUMBER.getKey(), pageNo);
         return this;
     }
 

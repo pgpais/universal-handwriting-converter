@@ -22,7 +22,7 @@ import java.math.BigInteger;
 public class InkMLWriter implements PageWriter {
 
     @Override
-    public void write(Page page, OutputStream os) throws Exception {
+    public void writeSingle(Page page, OutputStream os) throws Exception {
 
         InkType ink = new InkType();
 

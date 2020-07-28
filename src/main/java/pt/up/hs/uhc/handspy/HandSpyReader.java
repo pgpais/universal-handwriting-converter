@@ -4,7 +4,7 @@ import com.github.cliftonlabs.json_simple.JsonArray;
 import com.github.cliftonlabs.json_simple.JsonObject;
 import com.github.cliftonlabs.json_simple.Jsoner;
 import org.apache.commons.compress.archivers.tar.TarArchiveInputStream;
-import pt.up.hs.uhc.base.BaseReader;
+import pt.up.hs.uhc.base.BaseArchiveReader;
 import pt.up.hs.uhc.base.PageReader;
 import pt.up.hs.uhc.exceptions.UnsupportedFormatException;
 import pt.up.hs.uhc.handspy.keys.DotKeys;
@@ -15,6 +15,8 @@ import pt.up.hs.uhc.models.DotType;
 import pt.up.hs.uhc.models.Page;
 import pt.up.hs.uhc.models.Stroke;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.List;
@@ -25,10 +27,15 @@ import java.util.zip.ZipInputStream;
  *
  * @author José Carlos Paiva <code>josepaiva94@gmail.com</code>
  */
-public class HandSpyReader extends BaseReader {
+public class HandSpyReader extends BaseArchiveReader implements PageReader {
 
     @Override
-    public Page read(InputStream is) throws Exception {
+    public Page readSingle(File file) throws Exception {
+        return readSingle(new FileInputStream(file));
+    }
+
+    @Override
+    public Page readSingle(InputStream is) throws Exception {
 
         InputStreamReader isr = new InputStreamReader(is);
 

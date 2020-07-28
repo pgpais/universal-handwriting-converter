@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<ink archive="0" copy="1" documentID="uuid:0xcc12d57fbece519d-1" xmlns="http://www.w3.org/2003/InkML">
+    <inkSource manufacturer="Livescribe" model="3" serialNo="2594173318855" xml:id="Echo Desktop">
+        <sampleRate uniform="true" value="75"/>
+        <traceFormat>
+            <channel name="X" type="integer" units="anoto"/>
+            <channel name="Y" type="integer" units="anoto"/>
+        </traceFormat>
+    </inkSource>
+    <annotationXML type="Livescribe_Metadata">
+        <backgroundImage metadata_key="Livescribe_BgImage0.png" page_address="2427721690955794"/>
+        <audioSession created="1595858711651" end="21690110575" id="21690103087" name="07.27.2020 2:04p"
+                      start="21690103087">
+            <audio_file end="21690110575" file_attachment_key="Livescribe_Audio0.m4a" start="21690103087"/>
+            <audio_stroke end="21690109904" offset="21690104755" page_address="2427721690955794" start="21690104755"/>
+        </audioSession>
+    </annotationXML>
+    <traceGroup xml:id="2427721690955794">
+        <activeArea cropBounds="{(339, 339), (4284, 5599)}" mediaSize="(4963, 6278)" pageIndex="1" units="anoto"/>
+        <timestamp time="21690104861" xml:id="dts1"/>
+        <timestamp timeOffset="5056" timestampRef="#dts1" xml:id="dts2"/>
+        <trace contextRef="#dts1" timeOffset="0">504 763, 3 -1</trace>
+        <trace contextRef="#dts1" timeOffset="1263">4197 753, 0 0, 0 0, -1 0, -2 0, -2 0, -1 0, 0 1, 0 0, -1 1, 0 0, 0 0, 0 0, 0 0, 0 0, 0 0, 0 0, 0 0, 0 0, 0 0, 0 0, 0 0, 0 0, -1 0, 1 0, 0 0, -1 0, 0 0, 1 0, 0 0, 0 0, 0 0, 1 0, 0 0, 5 4</trace>
+        <trace contextRef="#dts1" timeOffset="4736">4102 5321, -1 0, 0 -1, 0 -2, -2 -2, -2 -2, -1 -1, -1 0, 0 -1, 0 0, 0 0, 0 0, 0 0, 0 0, 0 0, 0 0, 0 0, 0 0, 0 0, 0 0, -1 0, 1 0, 0 0, 1 1, 2 0</trace>
+    </traceGroup>
+</ink>

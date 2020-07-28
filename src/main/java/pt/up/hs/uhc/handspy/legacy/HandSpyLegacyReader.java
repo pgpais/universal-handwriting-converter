@@ -2,7 +2,7 @@ package pt.up.hs.uhc.handspy.legacy;
 
 import org.apache.commons.compress.archivers.tar.TarArchiveInputStream;
 import protocol.*;
-import pt.up.hs.uhc.base.BaseReader;
+import pt.up.hs.uhc.base.BaseArchiveReader;
 import pt.up.hs.uhc.base.PageReader;
 import pt.up.hs.uhc.exceptions.UnsupportedFormatException;
 import pt.up.hs.uhc.models.Dot;
@@ -13,6 +13,8 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.Unmarshaller;
 import javax.xml.transform.stream.StreamSource;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.*;
 import java.util.zip.ZipInputStream;
@@ -22,10 +24,15 @@ import java.util.zip.ZipInputStream;
  *
  * @author José Carlos Paiva <code>josepaiva94@gmail.com</code>
  */
-public class HandSpyLegacyReader extends BaseReader {
+public class HandSpyLegacyReader extends BaseArchiveReader implements PageReader {
 
     @Override
-    public Page read(InputStream is) throws Exception {
+    public Page readSingle(File file) throws Exception {
+        return readSingle(new FileInputStream(file));
+    }
+
+    @Override
+    public Page readSingle(InputStream is) throws Exception {
 
         // unmarshal to input stream
         Protocol protocol;

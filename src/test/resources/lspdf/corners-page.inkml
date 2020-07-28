@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<ink archive="0" copy="0" documentID="uuid:0x850cf14396d9ad86-1"
+     xmlns="http://www.w3.org/2003/InkML">
+    <inkSource manufacturer="Livescribe" model="3" serialNo="2594169562798" xml:id="Echo Desktop">
+        <sampleRate uniform="true" value="75"/>
+        <traceFormat>
+            <channel name="X" type="integer" units="anoto"/>
+            <channel name="Y" type="integer" units="anoto"/>
+        </traceFormat>
+    </inkSource>
+    <annotationXML type="Livescribe_Metadata">
+        <backgroundImage metadata_key="Livescribe_BgImage0.png" page_address="2427721690955806"/>
+        <audioSession created="1378289818208" end="91998357004" id="91998335725" name="9/4/13, 10:16:58 AM" start="91998335725">
+            <audio_file end="91998357004" file_attachment_key="Livescribe_Audio0.m4a" start="91998336140"/>
+            <audio_stroke end="91998355429" offset="91998348387" page_address="2427721690955806" start="91998348387"/>
+        </audioSession>
+    </annotationXML>
+    <traceGroup xml:id="2427721690955806">
+        <activeArea cropBounds="{(339, 339), (4284, 5599)}" mediaSize="(4963, 6278)" pageIndex="13" units="anoto"/>
+        <timestamp time="91998348387" xml:id="dts1"/>
+        <timestamp timeOffset="6940" timestampRef="#dts1" xml:id="dts2"/>
+        <trace contextRef="#dts1" timeOffset="0">494 518, 0 3, -1 1, 0 7, -3 7, -1 11, 1 12, 2 6, 6 5, 2 -3, 3 -5, 3 -9, -1 -16, 0 -8, -3 -4, -3 1, -3 0, -2 1, -4 4, -1 7, -1 6, 1 9, -1 5, 6 7, 9 7, 3 -1, 4 -1, 0 -9, -2 -14, 0 -12, -4 -8, -3 3, -2 0, -2 1, -7 5, -3 5, -1 3, 2 6, 1 5, 4 4, 10 5, 6 0, 1 -5, 3 -7, -1 -10, -3 -13, -4 -6, -1 2, -3 6, -1 1, 0 4, -5 1, 1 5, 3 5, 5 2, 5 1, 1 -2, 4 -5, 1 -7, 0 -5, -4 -6, -2 2, -2 9, -1 -1, 0 0, 1 0, 0 -2, 1 0, 2 0, 0 0, -1 -1</trace>
+        <trace contextRef="#dts1" timeOffset="1900">3918 576, -2 -2, 0 -1, 0 0, -1 1, 1 0, 1 2, 2 9, 3 1, 5 0, 9 3, 4 -1, 0 -1, 0 0, -4 -5, -5 -6, -7 -4, -6 1, -4 -1, -3 3, -3 1, -3 7, 0 7, 3 5, 8 4, 7 -1, 6 -3, 2 1, 1 -5, 1 -6, -1 -8, -4 -9, -6 0, -8 2, -5 4, -6 2, -5 6, -3 7, 1 4, 3 6, 6 1, 7 -1, 4 0, 7 -9, 4 -11, -4 -5, -7 -3, -8 2, -4 0, -2 2, 1 2, 3 5, 5 1, 10 3, 3 2, -1 -1</trace>
+        <trace contextRef="#dts1" timeOffset="3700">472 5379, -3 0, -2 0, -1 2, 2 5, 2 8, 5 10, 4 4, 4 0, 5 0, 5 -4, 3 -5, -1 -5, 0 -6, -4 -8, -7 -7, -6 -1, -6 0, -2 4, -2 4, -1 1, 1 4, 5 5, 4 4, 3 0, 3 -1, 3 -2, 1 -4, 2 -10, -2 -4, -2 -2, -1 0, -2 0, -3 2, -2 5, 0 7, 2 8, 4 4, 3 1, 3 0, 3 -1, 1 -1, -1 -5, -3 -10, -3 -5, -2 -1, -2 3, -3 5, 0 5, 1 4, 0 1, 2 1, 3 3, 6 1</trace>
+        <trace contextRef="#dts1" timeOffset="5700">4096 5245, -5 1, -4 1, -8 2, -9 5, -6 5, -3 7, -2 6, -1 7, 0 4, 2 4, 2 1, 4 0, 8 1, 9 -2, 8 -4, 4 -5, 4 -5, 3 -10, 1 -11, -2 -9, -1 -4, -4 -2, -4 -2, -3 1, -9 5, -7 12, -3 12, 0 6, 0 4, 2 2, 4 1, 3 -1, 4 -1, 4 -3, 4 -3, 1 -2, 2 -6, 1 -6, -1 -5, -1 -1, -2 0, -2 -1, -4 2, -6 1, -7 9, -3 9, -1 7, 1 2, 1 -1, 2 0, 5 -4, 5 -7, 7 -15, 3 -7, 1 -6, 0 -1, -1 0, -3 3, -5 9, -4 5, -4 11, 0 8, -1 2, 0 0, 1 -1, 2 -4, 5 -9, 8 -17, 3 -10, -1 2, -3 3, -6 9, -5 5, -4 8, -2 7, -1 5, 0 2, 0 0, 1 -2, 3 -5, 1 -7, 2 -3, -1 1, 0 1, -1 0, -2 1, -1 2, 0 0, 0 2, 0 2, 2 5, 6 4, 12 6</trace>
+    </traceGroup>
+</ink>

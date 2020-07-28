@@ -18,5 +18,5 @@ public interface PageWriter {
      * @param page {@link Page} data from page.
      * @throws Exception if an exception occurs while writing data.
      */
-    void write(Page page, OutputStream os) throws Exception;
+    void writeSingle(Page page, OutputStream os) throws Exception;
 }

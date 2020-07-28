@@ -21,7 +21,7 @@ public class HandSpyLegacyReaderTest {
     public void testSampleEmpty() throws Exception {
         InputStream is = TestUtils.openReadStreamForResource("handspy/legacy/single/sample-empty.xml");
 
-        Page page = new HandSpyLegacyReader().read(is);
+        Page page = new HandSpyLegacyReader().readSingle(is);
 
         Assertions.assertEquals("000", page.getMetadata("id"));
         Assertions.assertEquals("A", page.getMetadata("noteType"));
@@ -36,7 +36,7 @@ public class HandSpyLegacyReaderTest {
     public void testSampleFilled() throws Exception {
         InputStream is = TestUtils.openReadStreamForResource("handspy/legacy/single/sample-filled.xml");
 
-        Page page = new HandSpyLegacyReader().read(is);
+        Page page = new HandSpyLegacyReader().readSingle(is);
 
         Assertions.assertEquals("000", page.getMetadata("id"));
         Assertions.assertEquals("A", page.getMetadata("noteType"));

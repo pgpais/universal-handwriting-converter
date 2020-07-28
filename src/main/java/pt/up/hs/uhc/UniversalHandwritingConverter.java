@@ -10,6 +10,7 @@ import pt.up.hs.uhc.handspy.legacy.HandSpyLegacyReader;
 import pt.up.hs.uhc.handspy.legacy.HandSpyLegacyWriter;
 import pt.up.hs.uhc.inkml.InkMLReader;
 import pt.up.hs.uhc.inkml.InkMLWriter;
+import pt.up.hs.uhc.lspdf.LsPDFReader;
 import pt.up.hs.uhc.models.Page;
 import pt.up.hs.uhc.models.Format;
 import pt.up.hs.uhc.models.Rect;
@@ -30,23 +31,24 @@ import java.util.List;
 public class UniversalHandwritingConverter {
 
     // readers
-    private HandSpyReader handSpyReader = new HandSpyReader();
-    private HandSpyLegacyReader handSpyLegacyReader = new HandSpyLegacyReader();
-    private InkMLReader inkMLReader = new InkMLReader();
-    private NeoNotesReader neoNotesReader = new NeoNotesReader();
+    private final HandSpyReader handSpyReader = new HandSpyReader();
+    private final HandSpyLegacyReader handSpyLegacyReader = new HandSpyLegacyReader();
+    private final InkMLReader inkMLReader = new InkMLReader();
+    private final LsPDFReader lsPDFReader = new LsPDFReader();
+    private final NeoNotesReader neoNotesReader = new NeoNotesReader();
 
     // writers
-    private HandSpyWriter handSpyWriter = new HandSpyWriter();
-    private HandSpyLegacyWriter handSpyLegacyWriter = new HandSpyLegacyWriter();
-    private InkMLWriter inkMLWriter = new InkMLWriter();
-    private SvgWriter svgWriter = new SvgWriter();
+    private final HandSpyWriter handSpyWriter = new HandSpyWriter();
+    private final HandSpyLegacyWriter handSpyLegacyWriter = new HandSpyLegacyWriter();
+    private final InkMLWriter inkMLWriter = new InkMLWriter();
+    private final SvgWriter svgWriter = new SvgWriter();
 
     // format
     private Format inFormat = null;
     private Format outFormat = Format.HANDSPY;
 
     // pages
-    private List<Page> pages = new ArrayList<>();
+    private final List<Page> pages = new ArrayList<>();
 
     public UniversalHandwritingConverter() {
     }
@@ -190,6 +192,8 @@ public class UniversalHandwritingConverter {
             format = Format.HANDSPY_LEGACY;
         } else if (ext.matches("(?i)^(ink|inkml)$")) {
             format = Format.INKML;
+        } else if (ext.matches("(?i)^(pdf)$")) {
+            format = Format.LIVESCRIBE_PDF;
         } else if (ext.matches("(?i)^(json)$")) {
             format = Format.HANDSPY;
         } else {
@@ -217,16 +221,19 @@ public class UniversalHandwritingConverter {
                     pages.addAll(neoNotesReader.readArchive(filename, is));
                     break;
                 case NEONOTES:
-                    pages.add(neoNotesReader.read(is));
+                    pages.add(neoNotesReader.readSingle(is));
                     break;
                 case HANDSPY_LEGACY:
-                    pages.add(handSpyLegacyReader.read(is));
+                    pages.add(handSpyLegacyReader.readSingle(is));
                     break;
                 case INKML:
-                    pages.add(inkMLReader.read(is));
+                    pages.add(inkMLReader.readSingle(is));
+                    break;
+                case LIVESCRIBE_PDF:
+                    pages.addAll(lsPDFReader.read(is));
                     break;
                 case HANDSPY:
-                    pages.add(handSpyReader.read(is));
+                    pages.add(handSpyReader.readSingle(is));
                     break;
                 default:
                     throw new UnknownFormatException();
@@ -242,6 +249,6 @@ public class UniversalHandwritingConverter {
         if (pages.isEmpty() || pageNr < 0 || pageNr >= pages.size()) {
             throw new UniversalHandwritingConverterException("No such page.");
         }
-        writer.write(pages.get(pageNr), os);
+        writer.writeSingle(pages.get(pageNr), os);
     }
 }

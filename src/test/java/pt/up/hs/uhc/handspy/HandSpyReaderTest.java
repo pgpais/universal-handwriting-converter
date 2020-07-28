@@ -22,7 +22,7 @@ public class HandSpyReaderTest {
     public void testSampleEmpty() throws Exception {
         InputStream is = TestUtils.openReadStreamForResource("handspy/single/sample-empty.json");
 
-        Page page = new HandSpyReader().read(is);
+        Page page = new HandSpyReader().readSingle(is);
 
         Assertions.assertEquals(609, ((BigDecimal) page.getMetadata("noteType")).intValue());
         Assertions.assertEquals(300D, page.getWidth(), TestUtils.EPSILON);
@@ -40,7 +40,7 @@ public class HandSpyReaderTest {
     public void testSampleFilled() throws Exception {
         InputStream is = TestUtils.openReadStreamForResource("handspy/single/sample-filled.json");
 
-        Page page = new HandSpyReader().read(is);
+        Page page = new HandSpyReader().readSingle(is);
 
         Assertions.assertEquals(609, ((BigDecimal) page.getMetadata("noteType")).intValue());
         Assertions.assertEquals(300D, page.getWidth(), TestUtils.EPSILON);

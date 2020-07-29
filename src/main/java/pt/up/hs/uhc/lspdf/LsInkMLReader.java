@@ -179,16 +179,12 @@ public class LsInkMLReader implements MultiPageReader {
                     }
                 }
 
-                if (k == 0) {
-                    originX = x;
-                    originY = y;
-                    x = 0;
-                    y = 0;
-                }
+                originX += x;
+                originY += y;
 
                 Dot dot = new Dot()
-                        .x(x + originX)
-                        .y(y + originY)
+                        .x(originX)
+                        .y(originY)
                         .timestamp(time);
                 if (pressure >= 0) {
                     dot.pressure(pressure);

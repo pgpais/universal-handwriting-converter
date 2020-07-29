@@ -19,7 +19,7 @@ import java.util.List;
  */
 public class UniversalHandwritingConverterTest {
 
-    @Test
+    /*@Test
     public void testReadNeoNotesWithAutoDetect() {
         UniversalHandwritingConverter uhc = new UniversalHandwritingConverter()
                 .file(TestUtils.openFileForResource("neonotes/single/page_full.data"));
@@ -51,7 +51,7 @@ public class UniversalHandwritingConverterTest {
         Assertions.assertEquals(1576500049236L, lastStroke.getDots().get(0).getTimestamp());
         Assertions.assertEquals(86.1737297D, lastStroke.getDots().get(0).getX(), TestUtils.EPSILON);
         Assertions.assertEquals(280.9002883D, lastStroke.getDots().get(0).getY(), TestUtils.EPSILON);
-    }
+    }*/
 
     @Test
     public void testReadNeoNotesWithFormatSpecifiedNormalized() {
@@ -194,6 +194,26 @@ public class UniversalHandwritingConverterTest {
         Assertions.assertEquals(1576500049236L, lastStroke.getDots().get(0).getTimestamp());
         Assertions.assertEquals(86.1737297D, lastStroke.getDots().get(0).getX(), TestUtils.EPSILON);
         Assertions.assertEquals(280.9002883D, lastStroke.getDots().get(0).getY(), TestUtils.EPSILON);
+    }
+
+    @Test
+    public void testReadNeoNotesWithAutoDetect() {
+        UniversalHandwritingConverter uhc = new UniversalHandwritingConverter()
+                .file(TestUtils.openFileForResource("neonotes/single/corners-page.data"));
+
+        Page page = uhc.getPage();
+
+        //TestUtils.checkCorners(page);
+    }
+
+    @Test
+    public void testReadLsPDFWithAutoDetect() {
+        UniversalHandwritingConverter uhc = new UniversalHandwritingConverter()
+                .file(TestUtils.openFileForResource("lspdf/corners-page.pdf"));
+
+        Page page = uhc.getPage();
+
+        TestUtils.checkCorners(page);
     }
 
     @Test

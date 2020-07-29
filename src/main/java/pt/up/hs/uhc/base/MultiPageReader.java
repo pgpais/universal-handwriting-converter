@@ -17,7 +17,7 @@ public interface MultiPageReader {
      * Reads multiple pages of handwriting data from {@link File} file.
      *
      * @param file {@link File} file w/ handwriting data.
-     * @return {@link List<Page>} list of page data.
+     * @return {@link List} list of page data.
      * @throws Exception if an exception occurs while reading a list of page
      * data.
      */
@@ -28,7 +28,7 @@ public interface MultiPageReader {
      * contents.
      *
      * @param is {@link InputStream} to a file with handwriting data.
-     * @return {@link List<Page>} data from file.
+     * @return {@link List} data from file.
      * @throws Exception if an exception occurs while reading data.
      */
     List<Page> read(InputStream is) throws Exception;

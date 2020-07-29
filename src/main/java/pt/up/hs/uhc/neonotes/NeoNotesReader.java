@@ -58,8 +58,10 @@ public class NeoNotesReader extends BaseArchiveReader implements PageReader {
 
             int noteType = headerBuffer.getInt();
             int pageNo = headerBuffer.getInt();
-            double innerWidth = (double) headerBuffer.getFloat() * Constants.NCODE_COORDINATES_TO_MM_FACTOR;
-            double innerHeight = (double) headerBuffer.getFloat() * Constants.NCODE_COORDINATES_TO_MM_FACTOR;
+            double w = headerBuffer.getFloat();
+            double h = headerBuffer.getFloat();
+            double innerWidth = w * Constants.NCODE_COORDINATES_TO_MM_FACTOR;
+            double innerHeight = h * Constants.NCODE_COORDINATES_TO_MM_FACTOR;
             // NCodePaperSize size = NCodePaperSize.getPaperSizeFor(noteType, innerWidth, innerHeight);
 
             page
@@ -164,8 +166,8 @@ public class NeoNotesReader extends BaseArchiveReader implements PageReader {
         for (int c = 0; c < nDots; c++) {
             ByteBuffer dotBuffer = getByteBuffer(bufferedStream, DOT_SIZE);
 
-            double x = (double) dotBuffer.getFloat();
-            double y = (double) dotBuffer.getFloat();
+            double x = dotBuffer.getFloat();
+            double y = dotBuffer.getFloat();
             Dot dot = new Dot()
                     .x(x * Constants.NCODE_COORDINATES_TO_MM_FACTOR)
                     .y(y * Constants.NCODE_COORDINATES_TO_MM_FACTOR)

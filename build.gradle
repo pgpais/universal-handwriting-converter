@@ -10,6 +10,10 @@ plugins {
     id 'com.jfrog.bintray' version "${bintray_plugin_version}"
 }
 
+sourceCompatibility=1.8
+targetCompatibility=1.8
+assert System.properties["java.specification.version"] == "1.8" || "11" || "12" || "13"
+
 repositories {
     // Use jcenter for resolving dependencies.
     // You can declare any Maven/Ivy/file repository here.
@@ -148,13 +152,13 @@ task sourcesJar(type: Jar, dependsOn: classes) {
     from sourceSets.main.allSource
 }
 
-task javadocJar(type: Jar, dependsOn: javadoc) {
+/*task javadocJar(type: Jar, dependsOn: javadoc) {
     classifier = 'javadoc'
     from javadoc.destinationDir
-}
+}*/
 
 artifacts {
-    archives javadocJar
+    /*archives javadocJar*/
     archives sourcesJar
 }
 
@@ -191,7 +195,7 @@ publishing {
         MyPublication(MavenPublication) {
             from components.java
             artifact sourcesJar
-            artifact javadocJar
+            /*artifact javadocJar*/
             groupId publishedGroupId
             artifactId artifactId
             version libraryVersion

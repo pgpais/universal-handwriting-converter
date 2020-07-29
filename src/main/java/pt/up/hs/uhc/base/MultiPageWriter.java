@@ -18,7 +18,7 @@ public interface MultiPageWriter {
      * contents.
      *
      * @param is {@link InputStream} to a file with handwriting data.
-     * @return {@link List<Page>} data from file.
+     * @return {@link List} data from file.
      * @throws Exception if an exception occurs while reading data.
      */
     List<Page> read(InputStream is) throws Exception;

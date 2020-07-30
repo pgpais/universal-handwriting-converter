@@ -6,6 +6,7 @@ import org.apache.pdfbox.pdmodel.PDDocumentCatalog;
 import pt.up.hs.uhc.base.MultiPageReader;
 import pt.up.hs.uhc.exceptions.UnknownFormatException;
 import pt.up.hs.uhc.models.Page;
+import pt.up.hs.uhc.utils.StreamUtils;
 
 import java.io.*;
 import java.util.List;
@@ -72,7 +73,7 @@ public class LsPDFReader implements MultiPageReader {
     private static ByteArrayInputStream decompress(InputStream compressed)
             throws IOException {
         InputStream in = new InflaterInputStream(
-                new ByteArrayInputStream(compressed.readAllBytes())
+                new ByteArrayInputStream(StreamUtils.readAllBytes(compressed))
         );
         ByteArrayOutputStream buffer = new ByteArrayOutputStream();
         shovelInToOut(in, buffer);

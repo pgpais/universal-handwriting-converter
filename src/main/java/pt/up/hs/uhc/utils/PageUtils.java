@@ -6,6 +6,9 @@ import pt.up.hs.uhc.models.Rect;
 import pt.up.hs.uhc.models.Stroke;
 
 import java.util.Collection;
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
@@ -33,6 +36,17 @@ public class PageUtils {
                 .forEach(dot -> {
                     dot.setX(dot.getX() + dx);
                     dot.setY(dot.getY() + dy);
+                });
+    }
+
+    public static void scale(Page page, double s) {
+        page
+                .width(page.getWidth() * s)
+                .height(page.getHeight() * s);
+        getDotStream(page)
+                .forEach(dot -> {
+                    dot.setX(dot.getX() * s);
+                    dot.setY(dot.getY() * s);
                 });
     }
 
@@ -88,6 +102,27 @@ public class PageUtils {
                                 dot.timestamp(dot.getTimestamp() - startTime);
                             });
                 });
+    }
+
+    public static boolean hasOverlappingStrokes(Page page) {
+        if (page.getStrokes().isEmpty()) {
+            return false;
+        }
+
+        List<Stroke> strokes = page.getStrokes().parallelStream()
+                .sorted(Comparator.comparingLong(Stroke::getStartTime))
+                .collect(Collectors.toList());
+
+        Stroke prevStroke = strokes.get(0);
+        for (int i = 1; i < strokes.size(); i++) {
+            Stroke stroke = strokes.get(i);
+            if (prevStroke.getEndTime() > stroke.getStartTime()) {
+                return true;
+            }
+            prevStroke = stroke;
+        }
+
+        return false;
     }
 
     private static Stream<Dot> getDotStream(Page page) {

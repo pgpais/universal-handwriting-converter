@@ -31,10 +31,10 @@ public class NCodePaperSize {
         SIZES.put(629, new NCodePaperSize(629, "BLIND NOTEBOOK", 105, 148));
     }
 
-    private int type;
-    private String name;
-    private double width;
-    private double height;
+    private final int type;
+    private final String name;
+    private final double width;
+    private final double height;
 
     private NCodePaperSize(int type, String name, double width, double height) {
         this.type = type;

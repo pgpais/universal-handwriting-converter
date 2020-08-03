@@ -4,6 +4,7 @@ import org.w3c.dom.*;
 import org.xml.sax.SAXException;
 import pt.up.hs.uhc.base.MultiPageReader;
 import pt.up.hs.uhc.models.*;
+import pt.up.hs.uhc.utils.PageUtils;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -196,6 +197,10 @@ public class LsInkMLReader implements MultiPageReader {
             }
 
             page.addStroke(stroke.endTime(endTime));
+        }
+
+        if (PageUtils.hasOverlappingStrokes(page)) {
+            page.addMetadataCaptureError(CaptureError.STROKE_OVERLAP);
         }
 
         return page;

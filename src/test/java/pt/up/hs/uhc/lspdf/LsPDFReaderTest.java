@@ -3,6 +3,8 @@ package pt.up.hs.uhc.lspdf;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import pt.up.hs.uhc.TestUtils;
+import pt.up.hs.uhc.handspy.keys.PageMetadataKeys;
+import pt.up.hs.uhc.models.CaptureError;
 import pt.up.hs.uhc.models.Page;
 import pt.up.hs.uhc.models.Stroke;
 
@@ -25,6 +27,8 @@ public class LsPDFReaderTest {
         Assertions.assertEquals(237.80311D, page.getHeight(), TestUtils.EPSILON);
 
         TestUtils.checkCorners(page);
+
+        Assertions.assertNull(page.getMetadata().get(PageMetadataKeys.CAPTURE_ERROR.getKey()));
     }
 
     @Test
@@ -38,6 +42,8 @@ public class LsPDFReaderTest {
         Page page1 = pages.get(0);
         Assertions.assertEquals(187.99248D, page1.getWidth(), TestUtils.EPSILON);
         Assertions.assertEquals(237.80311D, page1.getHeight(), TestUtils.EPSILON);
+
+        Assertions.assertEquals(CaptureError.STROKE_OVERLAP, page1.getMetadata().get(PageMetadataKeys.CAPTURE_ERROR.getKey()));
 
         // page only written above middle
         final double halfHPage1 = page1.getHeight() / 2;
@@ -60,6 +66,8 @@ public class LsPDFReaderTest {
                         .flatMap(Collection::parallelStream)
                         .allMatch(dot -> dot.getY() < halfHPage2 && dot.getY() > 0)
         );
+
+        Assertions.assertEquals(CaptureError.STROKE_OVERLAP, page2.getMetadata().get(PageMetadataKeys.CAPTURE_ERROR.getKey()));
     }
 
     @Test
@@ -83,6 +91,8 @@ public class LsPDFReaderTest {
                         .allMatch(dot -> dot.getY() < halfHPage1 && dot.getY() > 0)
         );
 
+        Assertions.assertEquals(CaptureError.STROKE_OVERLAP, page1.getMetadata().get(PageMetadataKeys.CAPTURE_ERROR.getKey()));
+
         Page page2 = pages.get(1);
         Assertions.assertEquals(187.99248D, page2.getWidth(), TestUtils.EPSILON);
         Assertions.assertEquals(237.80311D, page2.getHeight(), TestUtils.EPSILON);
@@ -95,6 +105,8 @@ public class LsPDFReaderTest {
                         .flatMap(Collection::parallelStream)
                         .allMatch(dot -> dot.getY() < halfHPage2 && dot.getY() > 0)
         );
+
+        Assertions.assertEquals(CaptureError.STROKE_OVERLAP, page2.getMetadata().get(PageMetadataKeys.CAPTURE_ERROR.getKey()));
     }
 
     @Test
@@ -129,5 +141,7 @@ public class LsPDFReaderTest {
         Stroke fourthStroke = page.getStrokes().get(2);
         Assertions.assertTrue(fourthStroke.getDots().parallelStream()
                 .allMatch(dot -> dot.getX() > halfW && dot.getX() < page.getWidth() && dot.getY() > halfH && dot.getY() < page.getHeight()));
+
+        Assertions.assertNull(page.getMetadata().get(PageMetadataKeys.CAPTURE_ERROR.getKey()));
     }
 }

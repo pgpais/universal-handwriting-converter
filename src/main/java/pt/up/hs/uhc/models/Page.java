@@ -128,6 +128,11 @@ public class Page implements Serializable, Cloneable {
         return this;
     }
 
+    public Page addMetadataCaptureError(CaptureError captureError) {
+        this.metadata.put(PageMetadataKeys.CAPTURE_ERROR.getKey(), captureError);
+        return this;
+    }
+
     public List<Stroke> getStrokes() {
         return strokes;
     }

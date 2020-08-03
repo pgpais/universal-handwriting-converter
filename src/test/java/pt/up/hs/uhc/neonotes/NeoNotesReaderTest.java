@@ -3,6 +3,7 @@ package pt.up.hs.uhc.neonotes;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import pt.up.hs.uhc.TestUtils;
+import pt.up.hs.uhc.handspy.keys.PageMetadataKeys;
 import pt.up.hs.uhc.models.Page;
 import pt.up.hs.uhc.models.Stroke;
 
@@ -50,6 +51,8 @@ public class NeoNotesReaderTest {
         Assertions.assertEquals(1576500049236L, lastStroke.getDots().get(0).getTimestamp());
         Assertions.assertEquals(86.1737297D, lastStroke.getDots().get(0).getX(), TestUtils.EPSILON);
         Assertions.assertEquals(280.9002883D, lastStroke.getDots().get(0).getY(), TestUtils.EPSILON);
+
+        Assertions.assertNull(page.getMetadata().get(PageMetadataKeys.CAPTURE_ERROR.getKey()));
     }
 
     @Test
@@ -72,6 +75,8 @@ public class NeoNotesReaderTest {
         Assertions.assertEquals(1576499414218L, stroke.getStartTime());
         Assertions.assertEquals(1576499414226L, stroke.getEndTime());
         Assertions.assertEquals(3, stroke.getDots().size());
+
+        Assertions.assertNull(page.getMetadata().get(PageMetadataKeys.CAPTURE_ERROR.getKey()));
     }
 
     @Test
@@ -98,6 +103,8 @@ public class NeoNotesReaderTest {
         Assertions.assertEquals(1576499414218L, stroke.getStartTime());
         Assertions.assertEquals(1576499414226L, stroke.getEndTime());
         Assertions.assertEquals(3, stroke.getDots().size());
+
+        Assertions.assertNull(firstPage.getMetadata().get(PageMetadataKeys.CAPTURE_ERROR.getKey()));
 
         Page secondPage = pages.get(1);
         Assertions.assertEquals("neo", secondPage.getMetadata("id"));
@@ -126,6 +133,8 @@ public class NeoNotesReaderTest {
         Assertions.assertEquals(1576500049236L, lastStroke.getDots().get(0).getTimestamp());
         Assertions.assertEquals(86.1737297D, lastStroke.getDots().get(0).getX(), TestUtils.EPSILON);
         Assertions.assertEquals(280.9002883D, lastStroke.getDots().get(0).getY(), TestUtils.EPSILON);
+
+        Assertions.assertNull(secondPage.getMetadata().get(PageMetadataKeys.CAPTURE_ERROR.getKey()));
     }
 
     /*@Test

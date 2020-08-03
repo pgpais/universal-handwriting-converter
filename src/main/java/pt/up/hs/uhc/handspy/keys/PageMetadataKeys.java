@@ -15,7 +15,8 @@ public enum PageMetadataKeys implements JsonKey {
     PEN_SERIAL_NUMBER("penSerialNo", null),
     PEN_MANUFACTURER("penManufacturer", null),
     PEN_MODEL("penModel", null),
-    PAGE_NUMBER("pageNo", null);
+    PAGE_NUMBER("pageNo", null),
+    CAPTURE_ERROR("captureError", null);
 
     private final String name;
     private final Object value;

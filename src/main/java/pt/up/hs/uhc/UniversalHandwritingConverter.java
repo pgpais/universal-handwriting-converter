@@ -168,6 +168,15 @@ public class UniversalHandwritingConverter {
         return this;
     }
 
+    public UniversalHandwritingConverter scale(double s) {
+
+        for (Page page: pages) {
+            PageUtils.scale(page, s);
+        }
+
+        return this;
+    }
+
     public Page getPage() {
         if (pages.isEmpty()) {
             throw new UniversalHandwritingConverterException("No pages read yet.");

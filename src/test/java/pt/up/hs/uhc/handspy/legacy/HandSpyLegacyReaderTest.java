@@ -3,6 +3,7 @@ package pt.up.hs.uhc.handspy.legacy;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import pt.up.hs.uhc.TestUtils;
+import pt.up.hs.uhc.handspy.keys.PageMetadataKeys;
 import pt.up.hs.uhc.models.Dot;
 import pt.up.hs.uhc.models.Page;
 import pt.up.hs.uhc.models.Stroke;
@@ -30,6 +31,8 @@ public class HandSpyLegacyReaderTest {
         Assertions.assertEquals(0D, page.getHeight(), TestUtils.EPSILON);
 
         Assertions.assertEquals(1, page.getStrokes().size());
+
+        Assertions.assertNull(page.getMetadata().get(PageMetadataKeys.CAPTURE_ERROR.getKey()));
     }
 
     @Test
@@ -79,5 +82,7 @@ public class HandSpyLegacyReaderTest {
         Assertions.assertEquals(new Dot(37D, 40D, 9000L), secondStrokeDots.get(7));
         Assertions.assertEquals(new Dot(38D, 40D, 9500L), secondStrokeDots.get(8));
         Assertions.assertEquals(new Dot(39D, 40D, 10000L), secondStrokeDots.get(9));
+
+        Assertions.assertNull(page.getMetadata().get(PageMetadataKeys.CAPTURE_ERROR.getKey()));
     }
 }

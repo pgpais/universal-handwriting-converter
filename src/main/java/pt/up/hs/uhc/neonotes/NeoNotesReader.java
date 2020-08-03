@@ -4,9 +4,11 @@ import org.apache.commons.compress.archivers.tar.TarArchiveEntry;
 import org.apache.commons.compress.archivers.tar.TarArchiveInputStream;
 import pt.up.hs.uhc.base.BaseArchiveReader;
 import pt.up.hs.uhc.base.PageReader;
+import pt.up.hs.uhc.models.CaptureError;
 import pt.up.hs.uhc.models.Dot;
 import pt.up.hs.uhc.models.Page;
 import pt.up.hs.uhc.models.Stroke;
+import pt.up.hs.uhc.utils.PageUtils;
 
 import java.io.*;
 import java.nio.ByteBuffer;
@@ -89,6 +91,10 @@ public class NeoNotesReader extends BaseArchiveReader implements PageReader {
                     getByteBuffer(bufferedStream, guidStringSize),
                     guidStringSize)
             );
+        }
+
+        if (PageUtils.hasOverlappingStrokes(page)) {
+            page.addMetadataCaptureError(CaptureError.STROKE_OVERLAP);
         }
 
         return page;

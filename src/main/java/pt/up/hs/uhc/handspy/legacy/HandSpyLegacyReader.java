@@ -111,9 +111,19 @@ public class HandSpyLegacyReader extends BaseArchiveReader implements PageReader
 
     private Stroke readStroke(protocol.Strokes protocolStrokes) {
 
+        String start = protocolStrokes.getStart();
+        if (start == null) {
+            start = protocolStrokes.getBegin();
+        }
+
+        String stop = protocolStrokes.getStop();
+        if (stop == null) {
+            stop = protocolStrokes.getEnd();
+        }
+
         Stroke stroke = new Stroke()
-                .startTime(Long.parseLong(protocolStrokes.getStart()))
-                .endTime(Long.parseLong(protocolStrokes.getStop()));
+                .startTime(Long.parseLong(start))
+                .endTime(Long.parseLong(stop));
 
         protocolStrokes.getStroke()
                 .forEach(protocolStroke -> {

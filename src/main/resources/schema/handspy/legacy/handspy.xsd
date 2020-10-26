@@ -46,8 +46,8 @@
         <sequence>
             <element name="stroke" type="tns:Stroke" maxOccurs="unbounded"/>
         </sequence>
-        <attribute name="start" type="string"/>
-        <attribute name="stop" type="string"/>
+        <attribute name="start" type="string"/> <attribute name="begin" type="string"/>
+        <attribute name="stop" type="string"/> <attribute name="end" type="string"/>
     </complexType>
 
     <complexType name="Header">

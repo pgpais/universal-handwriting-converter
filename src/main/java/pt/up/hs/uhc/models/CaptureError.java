@@ -7,5 +7,6 @@ package pt.up.hs.uhc.models;
  */
 public enum CaptureError {
     STROKE_OVERLAP,
+    MARGIN_NOT_RESPECTED,
     OUT_OF_BOUNDS
 }

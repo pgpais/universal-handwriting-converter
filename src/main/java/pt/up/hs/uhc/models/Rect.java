@@ -1,5 +1,9 @@
 package pt.up.hs.uhc.models;
 
+import pt.up.hs.uhc.utils.NumberUtils;
+
+import static pt.up.hs.uhc.base.Constants.EPSILON;
+
 /**
  *
  *
@@ -76,5 +80,13 @@ public class Rect {
 
     public double getHeight() {
         return y2 - y1;
+    }
+
+    public boolean contains(Rect other) {
+        return
+                NumberUtils.compare(x1, other.x1) <= 0 &&
+                NumberUtils.compare(x2, other.x2) >= 0 &&
+                NumberUtils.compare(y1, other.y1) <= 0 &&
+                NumberUtils.compare(y2, other.y2) >= 0;
     }
 }

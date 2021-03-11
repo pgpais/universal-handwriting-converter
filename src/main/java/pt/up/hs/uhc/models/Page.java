@@ -14,6 +14,10 @@ public class Page implements Serializable, Cloneable {
 
     private Double width;
     private Double height;
+    private Double marginLeft = 0D;
+    private Double marginTop = 0D;
+    private Double marginRight = 0D;
+    private Double marginBottom = 0D;
     private Map<String, Object> metadata;
 
     private List<Stroke> strokes;
@@ -30,18 +34,15 @@ public class Page implements Serializable, Cloneable {
         this.strokes = new ArrayList<>();
     }
 
-    public Page(double width, double height, Map<String, Object> metadata) {
+    public Page(Double width, Double height, Double marginLeft, Double marginTop, Double marginRight, Double marginBottom) {
         this.width = width;
         this.height = height;
-        this.metadata = metadata;
+        this.marginLeft = marginLeft;
+        this.marginTop = marginTop;
+        this.marginRight = marginRight;
+        this.marginBottom = marginBottom;
+        this.metadata = new HashMap<>();
         this.strokes = new ArrayList<>();
-    }
-
-    public Page(double width, double height, Map<String, Object> metadata, List<Stroke> strokes) {
-        this.width = width;
-        this.height = height;
-        this.metadata = metadata;
-        this.strokes = strokes;
     }
 
     public Double getWidth() {
@@ -67,6 +68,58 @@ public class Page implements Serializable, Cloneable {
 
     public Page height(Double pageHeight) {
         this.height = pageHeight;
+        return this;
+    }
+
+    public Double getMarginLeft() {
+        return marginLeft;
+    }
+
+    public void setMarginLeft(Double marginLeft) {
+        this.marginLeft = marginLeft;
+    }
+
+    public Page marginLeft(Double marginLeft) {
+        this.marginLeft = marginLeft;
+        return this;
+    }
+
+    public Double getMarginTop() {
+        return marginTop;
+    }
+
+    public void setMarginTop(Double marginTop) {
+        this.marginTop = marginTop;
+    }
+
+    public Page marginTop(Double marginTop) {
+        this.marginTop = marginTop;
+        return this;
+    }
+
+    public Double getMarginRight() {
+        return marginRight;
+    }
+
+    public void setMarginRight(Double marginRight) {
+        this.marginRight = marginRight;
+    }
+
+    public Page marginRight(Double marginRight) {
+        this.marginRight = marginRight;
+        return this;
+    }
+
+    public Double getMarginBottom() {
+        return marginBottom;
+    }
+
+    public void setMarginBottom(Double marginBottom) {
+        this.marginBottom = marginBottom;
+    }
+
+    public Page marginBottom(Double marginBottom) {
+        this.marginBottom = marginBottom;
         return this;
     }
 

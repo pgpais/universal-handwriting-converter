@@ -55,7 +55,9 @@ public class LsPDFReader implements MultiPageReader {
             logger.info("This is a LiveScribe PDF.");
 
             COSStream inkMlCosStream = (COSStream) inkMLObject.getObject();
-            return decompress(inkMlCosStream.createRawInputStream());
+            ByteArrayInputStream bais = decompress(inkMlCosStream.createRawInputStream());
+            pd.close();
+            return bais;
         }
 
         logger.info("This is NOT a LiveScribe PDF.");
@@ -79,6 +81,7 @@ public class LsPDFReader implements MultiPageReader {
         shovelInToOut(in, buffer);
         in.close();
         buffer.close();
+        compressed.close();
         return new ByteArrayInputStream(buffer.toByteArray());
     }
 

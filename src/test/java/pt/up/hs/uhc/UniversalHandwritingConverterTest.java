@@ -67,8 +67,8 @@ public class UniversalHandwritingConverterTest {
         Assertions.assertEquals(1576500328443L, page.getMetadata("modifiedTime"));
         Assertions.assertEquals(79, page.getMetadata("pageNo"));
         Assertions.assertEquals(5, page.getMetadata("version"));
-        Assertions.assertEquals(210.226D, page.getWidth(), TestUtils.EPSILON);
-        Assertions.assertEquals(271.936D, page.getHeight(), TestUtils.EPSILON);
+        Assertions.assertEquals(236.000D, page.getWidth(), TestUtils.EPSILON);
+        Assertions.assertEquals(323.000D, page.getHeight(), TestUtils.EPSILON);
 
         Assertions.assertEquals(643, page.getStrokes().size());
 
@@ -103,8 +103,8 @@ public class UniversalHandwritingConverterTest {
         Assertions.assertEquals(1576500142563L, firstPage.getMetadata("modifiedTime"));
         Assertions.assertEquals(15, firstPage.getMetadata("pageNo"));
         Assertions.assertEquals(5, firstPage.getMetadata("version"));
-        Assertions.assertEquals(210.225928D, firstPage.getWidth(), TestUtils.EPSILON);
-        Assertions.assertEquals(271.935572D, firstPage.getHeight(), TestUtils.EPSILON);
+        Assertions.assertEquals(236.000D, firstPage.getWidth(), TestUtils.EPSILON);
+        Assertions.assertEquals(323.000D, firstPage.getHeight(), TestUtils.EPSILON);
 
         Assertions.assertEquals(1, firstPage.getStrokes().size());
 
@@ -120,8 +120,8 @@ public class UniversalHandwritingConverterTest {
         Assertions.assertEquals(1576500328443L, secondPage.getMetadata("modifiedTime"));
         Assertions.assertEquals(79, secondPage.getMetadata("pageNo"));
         Assertions.assertEquals(5, secondPage.getMetadata("version"));
-        Assertions.assertEquals(210.225928D, secondPage.getWidth(), TestUtils.EPSILON);
-        Assertions.assertEquals(271.935572D, secondPage.getHeight(), TestUtils.EPSILON);
+        Assertions.assertEquals(236.000D, secondPage.getWidth(), TestUtils.EPSILON);
+        Assertions.assertEquals(323.000D, secondPage.getHeight(), TestUtils.EPSILON);
 
         Assertions.assertEquals(643, secondPage.getStrokes().size());
 
@@ -157,8 +157,8 @@ public class UniversalHandwritingConverterTest {
         Assertions.assertEquals(1576500142563L, firstPage.getMetadata("modifiedTime"));
         Assertions.assertEquals(15, firstPage.getMetadata("pageNo"));
         Assertions.assertEquals(5, firstPage.getMetadata("version"));
-        Assertions.assertEquals(210.225928D, firstPage.getWidth(), TestUtils.EPSILON);
-        Assertions.assertEquals(271.935572D, firstPage.getHeight(), TestUtils.EPSILON);
+        Assertions.assertEquals(236.000D, firstPage.getWidth(), TestUtils.EPSILON);
+        Assertions.assertEquals(323.000D, firstPage.getHeight(), TestUtils.EPSILON);
 
         Assertions.assertEquals(1, firstPage.getStrokes().size());
 
@@ -174,8 +174,8 @@ public class UniversalHandwritingConverterTest {
         Assertions.assertEquals(1576500328443L, secondPage.getMetadata("modifiedTime"));
         Assertions.assertEquals(79, secondPage.getMetadata("pageNo"));
         Assertions.assertEquals(5, secondPage.getMetadata("version"));
-        Assertions.assertEquals(210.225928D, secondPage.getWidth(), TestUtils.EPSILON);
-        Assertions.assertEquals(271.935572D, secondPage.getHeight(), TestUtils.EPSILON);
+        Assertions.assertEquals(236.000D, secondPage.getWidth(), TestUtils.EPSILON);
+        Assertions.assertEquals(323.000D, secondPage.getHeight(), TestUtils.EPSILON);
 
         Assertions.assertEquals(643, secondPage.getStrokes().size());
 
@@ -203,7 +203,7 @@ public class UniversalHandwritingConverterTest {
 
         Page page = uhc.getPage();
 
-        //TestUtils.checkCorners(page);
+        TestUtils.checkCorners(page);
     }
 
     @Test
@@ -516,6 +516,38 @@ public class UniversalHandwritingConverterTest {
                 .center()
                 .outputFormat(Format.SVG)
                 .write(Files.newOutputStream(Paths.get("page.svg")));
+    }
+
+    @Test
+    public void testWriteMultipleSvg() throws Exception {
+        new UniversalHandwritingConverter()
+                .file(TestUtils.openFileForResource("neonotes/archive/soft-lines.neonotes.zip"))
+                .center()
+                .outputFormat(Format.SVG)
+                .write(0, Files.newOutputStream(Paths.get("page-1.svg")))
+                .write(1, Files.newOutputStream(Paths.get("page-2.svg")))
+                .write(2, Files.newOutputStream(Paths.get("page-3.svg")))
+                .write(3, Files.newOutputStream(Paths.get("page-4.svg")));
+    }
+
+    @Test
+    public void testWriteMariona1Svg() throws Exception {
+        new UniversalHandwritingConverter()
+                .file(TestUtils.openFileForResource("neonotes/archive/mariona-1.neonotes.zip"))
+                .center()
+                .outputFormat(Format.SVG)
+                .write(0, Files.newOutputStream(Paths.get("page-1.svg")))
+                .write(1, Files.newOutputStream(Paths.get("page-2.svg")))
+                .write(2, Files.newOutputStream(Paths.get("page-3.svg")))
+                .write(3, Files.newOutputStream(Paths.get("page-4.svg")))
+                .write(4, Files.newOutputStream(Paths.get("page-5.svg")))
+                .write(5, Files.newOutputStream(Paths.get("page-6.svg")))
+                .write(6, Files.newOutputStream(Paths.get("page-7.svg")))
+                .write(7, Files.newOutputStream(Paths.get("page-8.svg")))
+                .write(8, Files.newOutputStream(Paths.get("page-9.svg")))
+                .write(9, Files.newOutputStream(Paths.get("page-10.svg")))
+                .write(10, Files.newOutputStream(Paths.get("page-11.svg")))
+                .write(11, Files.newOutputStream(Paths.get("page-12.svg")));
     }
 
     @Test

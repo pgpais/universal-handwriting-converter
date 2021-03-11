@@ -8,6 +8,7 @@ import pt.up.hs.uhc.models.Stroke;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -125,9 +126,26 @@ public class PageUtils {
         return false;
     }
 
+    public static boolean hasDotOutOfContentArea(Page page) {
+        Rect rect = getBoundingRect(page);
+        Rect contentAreaRect = new Rect(
+                page.getMarginLeft(),
+                page.getMarginTop(),
+                page.getWidth() - page.getMarginRight(),
+                page.getHeight() - page.getMarginBottom()
+        );
+        return !contentAreaRect.contains(rect);
+    }
+
+    public static boolean hasOutOfBoundariesDot(Page page) {
+        Rect rect = getBoundingRect(page);
+        Rect pageRect = new Rect(0, 0, page.getWidth(), page.getHeight());
+        return !pageRect.contains(rect);
+    }
+
     private static Stream<Dot> getDotStream(Page page) {
         return page.getStrokes()
-                .parallelStream()
+                .stream()
                 .map(Stroke::getDots)
                 .flatMap(Collection::parallelStream);
     }

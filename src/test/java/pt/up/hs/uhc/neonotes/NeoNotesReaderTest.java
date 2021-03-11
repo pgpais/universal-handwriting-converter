@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import pt.up.hs.uhc.TestUtils;
 import pt.up.hs.uhc.handspy.keys.PageMetadataKeys;
+import pt.up.hs.uhc.models.CaptureError;
 import pt.up.hs.uhc.models.Page;
 import pt.up.hs.uhc.models.Stroke;
 
@@ -31,8 +32,8 @@ public class NeoNotesReaderTest {
         Assertions.assertEquals(1576500328443L, page.getMetadata("modifiedTime"));
         Assertions.assertEquals(79, page.getMetadata("pageNo"));
         Assertions.assertEquals(5, page.getMetadata("version"));
-        Assertions.assertEquals(210.225928D, page.getWidth(), TestUtils.EPSILON);
-        Assertions.assertEquals(271.935572D, page.getHeight(), TestUtils.EPSILON);
+        Assertions.assertEquals(236.000D, page.getWidth(), TestUtils.EPSILON);
+        Assertions.assertEquals(323.000D, page.getHeight(), TestUtils.EPSILON);
 
         Assertions.assertEquals(643, page.getStrokes().size());
 
@@ -66,8 +67,8 @@ public class NeoNotesReaderTest {
         Assertions.assertEquals(1576500142563L, page.getMetadata("modifiedTime"));
         Assertions.assertEquals(15, page.getMetadata("pageNo"));
         Assertions.assertEquals(5, page.getMetadata("version"));
-        Assertions.assertEquals(210.225928D, page.getWidth(), TestUtils.EPSILON);
-        Assertions.assertEquals(271.935572D, page.getHeight(), TestUtils.EPSILON);
+        Assertions.assertEquals(236.000D, page.getWidth(), TestUtils.EPSILON);
+        Assertions.assertEquals(323.000D, page.getHeight(), TestUtils.EPSILON);
 
         Assertions.assertEquals(1, page.getStrokes().size());
 
@@ -94,8 +95,8 @@ public class NeoNotesReaderTest {
         Assertions.assertEquals(1576500142563L, firstPage.getMetadata("modifiedTime"));
         Assertions.assertEquals(15, firstPage.getMetadata("pageNo"));
         Assertions.assertEquals(5, firstPage.getMetadata("version"));
-        Assertions.assertEquals(210.225928D, firstPage.getWidth(), TestUtils.EPSILON);
-        Assertions.assertEquals(271.935572D, firstPage.getHeight(), TestUtils.EPSILON);
+        Assertions.assertEquals(236.000D, firstPage.getWidth(), TestUtils.EPSILON);
+        Assertions.assertEquals(323.000D, firstPage.getHeight(), TestUtils.EPSILON);
 
         Assertions.assertEquals(1, firstPage.getStrokes().size());
 
@@ -113,8 +114,8 @@ public class NeoNotesReaderTest {
         Assertions.assertEquals(1576500328443L, secondPage.getMetadata("modifiedTime"));
         Assertions.assertEquals(79, secondPage.getMetadata("pageNo"));
         Assertions.assertEquals(5, secondPage.getMetadata("version"));
-        Assertions.assertEquals(210.225928D, secondPage.getWidth(), TestUtils.EPSILON);
-        Assertions.assertEquals(271.935572D, secondPage.getHeight(), TestUtils.EPSILON);
+        Assertions.assertEquals(236.000D, secondPage.getWidth(), TestUtils.EPSILON);
+        Assertions.assertEquals(323.000D, secondPage.getHeight(), TestUtils.EPSILON);
 
         Assertions.assertEquals(643, secondPage.getStrokes().size());
 
@@ -137,12 +138,99 @@ public class NeoNotesReaderTest {
         Assertions.assertNull(secondPage.getMetadata().get(PageMetadataKeys.CAPTURE_ERROR.getKey()));
     }
 
-    /*@Test
-    public void testWriteHandSpy() throws Exception {
-        InputStream is = TestUtils.openReadStreamForResource("neonotes/single/page_full.data");
+    @Test
+    public void testReadFatArchive() throws Exception {
+        InputStream is = TestUtils.openReadStreamForResource("neonotes/archive/fat-archive.neonotes.zip");
 
-        Page page = new NeoNotesReader().read(is);
+        List<Page> pages = new NeoNotesReader().readArchive(new ZipInputStream(new BufferedInputStream(is)));
 
-        new HandSpyWriter().write(page, Files.newOutputStream(Paths.get("page.json")));
-    }*/
+        Assertions.assertEquals(70, pages.size());
+    }
+
+    @Test
+    public void testReadFatArchive2() throws Exception {
+        InputStream is = TestUtils.openReadStreamForResource("neonotes/archive/fat-archive-2.neonotes.zip");
+
+        List<Page> pages = new NeoNotesReader().readArchive(new ZipInputStream(new BufferedInputStream(is)));
+
+        Assertions.assertEquals(61, pages.size());
+    }
+
+    @Test
+    public void testReadSoftLines() throws Exception {
+        InputStream is = TestUtils.openReadStreamForResource("neonotes/archive/soft-lines.neonotes.zip");
+
+        List<Page> pages = new NeoNotesReader().readArchive(new ZipInputStream(new BufferedInputStream(is)));
+
+        Assertions.assertEquals(4, pages.size());
+    }
+
+    @Test
+    public void testReadMariona1() throws Exception {
+        InputStream is = TestUtils.openReadStreamForResource("neonotes/archive/mariona-1.neonotes.zip");
+
+        List<Page> pages = new NeoNotesReader()
+                .readArchive(new ZipInputStream(new BufferedInputStream(is)));
+
+        Assertions.assertEquals(12, pages.size());
+
+        Assertions.assertEquals(
+                CaptureError.OUT_OF_BOUNDS,
+                pages.get(0).getMetadata().get(PageMetadataKeys.CAPTURE_ERROR.getKey())
+        );
+
+        Assertions.assertEquals(
+                CaptureError.OUT_OF_BOUNDS,
+                pages.get(0).getMetadata().get(PageMetadataKeys.CAPTURE_ERROR.getKey())
+        );
+
+        Assertions.assertEquals(
+                CaptureError.MARGIN_NOT_RESPECTED,
+                pages.get(2).getMetadata().get(PageMetadataKeys.CAPTURE_ERROR.getKey())
+        );
+
+        Assertions.assertEquals(
+                CaptureError.MARGIN_NOT_RESPECTED,
+                pages.get(3).getMetadata().get(PageMetadataKeys.CAPTURE_ERROR.getKey())
+        );
+
+        Assertions.assertEquals(
+                CaptureError.STROKE_OVERLAP,
+                pages.get(4).getMetadata().get(PageMetadataKeys.CAPTURE_ERROR.getKey())
+        );
+
+        Assertions.assertEquals(
+                CaptureError.OUT_OF_BOUNDS,
+                pages.get(5).getMetadata().get(PageMetadataKeys.CAPTURE_ERROR.getKey())
+        );
+
+        Assertions.assertEquals(
+                CaptureError.STROKE_OVERLAP,
+                pages.get(6).getMetadata().get(PageMetadataKeys.CAPTURE_ERROR.getKey())
+        );
+
+        Assertions.assertEquals(
+                CaptureError.MARGIN_NOT_RESPECTED,
+                pages.get(7).getMetadata().get(PageMetadataKeys.CAPTURE_ERROR.getKey())
+        );
+
+        Assertions.assertEquals(
+                CaptureError.MARGIN_NOT_RESPECTED,
+                pages.get(8).getMetadata().get(PageMetadataKeys.CAPTURE_ERROR.getKey())
+        );
+
+        Assertions.assertEquals(
+                CaptureError.STROKE_OVERLAP,
+                pages.get(9).getMetadata().get(PageMetadataKeys.CAPTURE_ERROR.getKey())
+        );
+
+        Assertions.assertNull(
+                pages.get(10).getMetadata().get(PageMetadataKeys.CAPTURE_ERROR.getKey())
+        );
+
+        Assertions.assertEquals(
+                CaptureError.OUT_OF_BOUNDS,
+                pages.get(11).getMetadata().get(PageMetadataKeys.CAPTURE_ERROR.getKey())
+        );
+    }
 }

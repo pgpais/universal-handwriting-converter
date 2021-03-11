@@ -129,7 +129,7 @@ public class UniversalHandwritingConverter {
 
     public UniversalHandwritingConverter center() {
 
-        for (Page page: pages) {
+        /*for (Page page: pages) {
 
             // calculate page center
             double pcx = page.getWidth() / 2;
@@ -145,7 +145,7 @@ public class UniversalHandwritingConverter {
             double dy = pcy - bcy;
 
             PageUtils.translate(page, dx, dy);
-        }
+        }*/
 
         return this;
     }

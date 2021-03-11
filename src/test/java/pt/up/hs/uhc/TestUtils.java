@@ -14,7 +14,7 @@ import java.util.Objects;
  * @author José Carlos Paiva <code>josepaiva94@gmail.com</code>
  */
 public class TestUtils {
-    public static final double EPSILON = 1e-5;
+    public static final double EPSILON = 1e-3;
 
     public static InputStream openReadStreamForResource(String path) {
         return Thread.currentThread().getContextClassLoader()

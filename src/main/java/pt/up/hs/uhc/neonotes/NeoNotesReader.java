@@ -54,23 +54,29 @@ public class NeoNotesReader extends BaseArchiveReader implements PageReader {
             ByteBuffer headerBuffer = getByteBuffer(bufferedStream, HEADER_SIZE);
 
             // read header metadata
-            page
-                    .addMetadata("id", getString(headerBuffer, ID_SIZE))
-                    .addMetadata("version", headerBuffer.getInt());
-
+            String id = getString(headerBuffer, ID_SIZE);
+            int version = headerBuffer.getInt();
             int noteType = headerBuffer.getInt();
             int pageNo = headerBuffer.getInt();
             double w = headerBuffer.getFloat();
             double h = headerBuffer.getFloat();
-            double innerWidth = w * Constants.NCODE_COORDINATES_TO_MM_FACTOR;
-            double innerHeight = h * Constants.NCODE_COORDINATES_TO_MM_FACTOR;
-            // NCodePaperSize size = NCodePaperSize.getPaperSizeFor(noteType, innerWidth, innerHeight);
+            NCodePaperSize size = NCodePaperSize.getPaperSizeFor(
+                    noteType,
+                    w * Constants.NCODE_COORDINATES_TO_MM_FACTOR,
+                    h * Constants.NCODE_COORDINATES_TO_MM_FACTOR
+            );
 
             page
+                    .addMetadata("id", id)
+                    .addMetadata("version", version)
                     .addMetadata("noteType", noteType)
                     .addMetadata("pageNo", pageNo)
-                    .width(innerWidth)
-                    .height(innerHeight)
+                    .width(size.getWidth())
+                    .height(size.getHeight())
+                    .marginLeft(size.getMarginLeft())
+                    .marginTop(size.getMarginTop())
+                    .marginRight(size.getMarginRight())
+                    .marginBottom(size.getMarginBottom())
                     .addMetadata("createdTime", headerBuffer.getLong())
                     .addMetadata("modifiedTime", headerBuffer.getLong())
                     .addMetadata("dirtyBit", headerBuffer.get() != 0);
@@ -95,6 +101,12 @@ public class NeoNotesReader extends BaseArchiveReader implements PageReader {
 
         if (PageUtils.hasOverlappingStrokes(page)) {
             page.addMetadataCaptureError(CaptureError.STROKE_OVERLAP);
+        } else if (PageUtils.hasDotOutOfContentArea(page)) {
+            if (PageUtils.hasOutOfBoundariesDot(page)) {
+                page.addMetadataCaptureError(CaptureError.OUT_OF_BOUNDS);
+            } else {
+                page.addMetadataCaptureError(CaptureError.MARGIN_NOT_RESPECTED);
+            }
         }
 
         return page;
@@ -174,6 +186,7 @@ public class NeoNotesReader extends BaseArchiveReader implements PageReader {
 
             double x = dotBuffer.getFloat();
             double y = dotBuffer.getFloat();
+
             Dot dot = new Dot()
                     .x(x * Constants.NCODE_COORDINATES_TO_MM_FACTOR)
                     .y(y * Constants.NCODE_COORDINATES_TO_MM_FACTOR)

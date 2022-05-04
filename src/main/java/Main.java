@@ -4,6 +4,7 @@ import pt.up.hs.uhc.models.Page;
 import pt.up.hs.uhc.models.Stroke;
 
 import java.io.*;
+import java.util.Date;
 import java.util.List;
 
 public class Main {
@@ -33,8 +34,15 @@ public class Main {
         List<Page> pages = converter.getPages();
         Page page = pages.get(0);
         long firstTimestamp = page.getStrokes().get(0).getStartTime();
+        Date firstDate = new Date(firstTimestamp);
+        Date lastDate = new Date(firstTimestamp);
         for (Stroke stroke : page.getStrokes()) {
-            System.out.println(stroke.getStartTime() - firstTimestamp);
+            Date curDate = new Date(stroke.getStartTime());
+            System.out.println("Absolute Timestamp: " + stroke.getStartTime() + " | Relative Timestamp: " + (stroke.getStartTime() - firstTimestamp));
+            System.out.println("Timestamp date: " + curDate.toString());
+            System.out.println("Seconds before last stroke: " + ((curDate.getTime() - lastDate.getTime())/1000.0));
+            System.out.println();
+            lastDate = curDate;
         }
     }
 }

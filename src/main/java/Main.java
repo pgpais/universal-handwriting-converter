@@ -1,3 +1,4 @@
+import lemon.TrainingSession;
 import pt.up.hs.uhc.UniversalHandwritingConverter;
 import pt.up.hs.uhc.models.Format;
 import pt.up.hs.uhc.models.Page;

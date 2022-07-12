@@ -49,7 +49,6 @@ public class Main {
         int trialNumber = 0;
         for (Stroke stroke :
                 page.getStrokes()) {
-            trialNumber++;
             Date currentStrokeDate = new Date(stroke.getStartTime());
             System.out.println(currentStrokeDate.toString());
 
@@ -74,6 +73,7 @@ public class Main {
                     boolean isNotInSameTrial = (currentStrokeDate.getTime() - lastStrokeDate.getTime()) > MIN_DELAY_BETWEEN_TRIALS;
                     if(isNotInSameTrial){
                         TrainingTrial trial = new TrainingTrial(characterStrokes, "Trial" + trialNumber);
+                        trialNumber++;
                         trainingSession.addTrial(trial);
                         characterStrokes = new ArrayList<>();
                     }

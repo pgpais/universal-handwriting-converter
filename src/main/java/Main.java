@@ -1,14 +1,16 @@
 import lemon.TrainingSession;
-import lemon.Trial;
+import lemon.TrainingTrial;
 import pt.up.hs.uhc.UniversalHandwritingConverter;
 import pt.up.hs.uhc.models.Page;
 import pt.up.hs.uhc.models.Stroke;
 
 import java.io.*;
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Main {
-    private static final float MIN_NAME_TO_CHARACTER_DELAY = 60 * 1000; // in milliseconds
+    private static final float MIN_NAME_TO_CHARACTER_DELAY = 15 * 1000; // in milliseconds
     private static final float MIN_DELAY_BETWEEN_TRAININGS = 600 * 1000; // in milliseconds
     private static final float MIN_DELAY_BETWEEN_TRIALS = 1 * 1000; // in milliseconds
 
@@ -34,18 +36,20 @@ public class Main {
         System.out.println(file.getAbsolutePath());
         converter.file(file);
         List<Page> pages = converter.getPages();
-        // Getting 2nd page for now
+        // TODO: figure out why pages are in a weird order. (it might be necessary to order them by first stroke date)
         Page page = pages.get(1);
 
-        TrainingSession trainingSession = new TrainingSession();
+        TrainingSession trainingSession = new TrainingSession("Training1");
 
         // Look for all strokes, look for a specific delay (e.g. 1 second) as that is the time between the name and the character drawings
         List<Stroke> nameStrokes = new ArrayList<>();
         List<Stroke> characterStrokes = new ArrayList<>();
         boolean foundFinalNameStroke = false;
         Date lastStrokeDate = null;
+        int trialNumber = 0;
         for (Stroke stroke :
                 page.getStrokes()) {
+            trialNumber++;
             Date currentStrokeDate = new Date(stroke.getStartTime());
             System.out.println(currentStrokeDate.toString());
 
@@ -59,18 +63,21 @@ public class Main {
                     break;
                 }
                 else if (isNotNameStroke || foundFinalNameStroke) {
-                    foundFinalNameStroke = true;
-                    characterStrokes.add(stroke);
+                    if(!foundFinalNameStroke){
+                        foundFinalNameStroke = true;
+                        characterStrokes.add(stroke);
+                        continue;
+                    }
+
                     //TODO: parse strokes to find if they are part of same trial and, if not, create a new one and add to training
                     //use the constant
                     boolean isNotInSameTrial = (currentStrokeDate.getTime() - lastStrokeDate.getTime()) > MIN_DELAY_BETWEEN_TRIALS;
                     if(isNotInSameTrial){
-                        Trial trial = new Trial(characterStrokes);
+                        TrainingTrial trial = new TrainingTrial(characterStrokes, "Trial" + trialNumber);
                         trainingSession.addTrial(trial);
                         characterStrokes = new ArrayList<>();
-                    }else{
-                        characterStrokes.add(stroke);
                     }
+                    characterStrokes.add(stroke);
                 }
                 else {
                     nameStrokes.add(stroke);
@@ -78,20 +85,42 @@ public class Main {
             }
             lastStrokeDate = new Date(stroke.getEndTime());
         }
+        TrainingTrial trial = new TrainingTrial(characterStrokes, "Trial"+trialNumber);
+        trainingSession.addTrial(trial);
         trainingSession.addNameStrokes(nameStrokes);
         trainingSession.addCharacterStrokes(characterStrokes);
 
-//        Page page = pages.get(0);
-//        long firstTimestamp = page.getStrokes().get(0).getStartTime();
-//        Date firstDate = new Date(firstTimestamp);
-//        Date lastDate = new Date(firstTimestamp);
-//        for (Stroke stroke : page.getStrokes()) {
-//            Date curDate = new Date(stroke.getStartTime());
-//            System.out.println("Absolute Timestamp: " + stroke.getStartTime() + " | Relative Timestamp: " + (stroke.getStartTime() - firstTimestamp));
-//            System.out.println("Timestamp date: " + curDate.toString());
-//            System.out.println("Seconds before last stroke: " + ((curDate.getTime() - lastDate.getTime())/1000.0));
-//            System.out.println();
-//            lastDate = curDate;
-//        }
+        System.out.println(trainingSession);
+        try {
+            List<String> headers = TrainingSession.CSVHeaders();
+            List<List<String>> data = trainingSession.toCSV();
+            List<List<String>> dataWithHeaders = new ArrayList<>();
+            dataWithHeaders.add(headers);
+            dataWithHeaders.addAll(data);
+            writeToCSV(dataWithHeaders, "training.csv");
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    public static String convertToCSV(List<String> data) {
+        String[] dataArray = data.toArray(new String[0]);
+        return Stream.of(dataArray)
+                .collect(Collectors.joining(","));
+    }
+
+    public static void writeToCSV(List<List<String>> dataLines, String fileName) throws FileNotFoundException {
+        File csvOutputFile = new File(fileName);
+        try (PrintWriter pw = new PrintWriter(csvOutputFile)) {
+            for (List<String> dataLine : dataLines) {
+                String s = convertToCSV(dataLine);
+                pw.println(s);
+            }
+        }
+
+        if(csvOutputFile.exists()){
+            System.out.println(fileName + " written successfully");
+        }
     }
 }
